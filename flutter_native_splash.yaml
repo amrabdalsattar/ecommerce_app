@@ -1,0 +1,15 @@
+flutter_native_splash:
+
+  # IOS & Android below 12
+  image: assets/images/RouteLogo.png
+  background_image: "assets/images/backGroundSplash.png"
+  background_image_dark: "assets/images/backGroundSplash.png"
+  android_12:
+    image: assets/images/RouteLogo.png
+    color: "#004081"
+    background_image: "assets/images/backGroundSplash.png"
+    background_image_dark: "assets/images/backGroundSplash.png"
+background_image_android: "assets/images/backGroundSplash.png"
+background_image_dark_android: "assets/images/backGroundSplash.png"
+background_image_ios: "assets/images/backGroundSplash.png"
+background_image_dark_ios: "assets/images/backGroundSplash.png"
