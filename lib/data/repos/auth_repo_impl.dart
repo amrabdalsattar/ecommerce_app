@@ -29,14 +29,12 @@ class AuthRepoImpl extends AuthRepo {
   }
 
   Connectivity connectivity;
-
   @override
   Future<Either<Failure, bool>> login(
       {required String email, required String password}) async {
-    final ConnectivityResult connectivityResult =
-        await (connectivity.checkConnectivity());
-    if (connectivityResult == ConnectivityResult.wifi ||
-        connectivityResult == ConnectivityResult.mobile) {
+    final List<ConnectivityResult> connectivityResult = await (connectivity.checkConnectivity());
+    if (connectivityResult.contains(ConnectivityResult.wifi)||
+        connectivityResult.contains(ConnectivityResult.mobile)) {
       try {
         Response serverResponse = await dio.post(ApiConstants.loginEndPoint,
             data: {"email": email, "password": password});
@@ -59,10 +57,9 @@ class AuthRepoImpl extends AuthRepo {
 
   @override
   Future<Either<Failure, bool>> register({required RegisterRequest data}) async {
-    final ConnectivityResult connectivityResult =
-    await (connectivity.checkConnectivity());
-    if (connectivityResult == ConnectivityResult.wifi ||
-        connectivityResult == ConnectivityResult.mobile) {
+    final List<ConnectivityResult> connectivityResult = await (connectivity.checkConnectivity());
+    if (connectivityResult.contains(ConnectivityResult.wifi)||
+        connectivityResult.contains(ConnectivityResult.mobile)) {
       try {
         Response serverResponse = await dio.post(ApiConstants.registerEndPoint,
             data: data.toJson());
