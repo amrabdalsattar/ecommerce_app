@@ -1,18 +1,16 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:ecommerce_app/domain/di/di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../data/repos/auth_repo_impl.dart';
-import '../../../domain/use_cases/register_use_case.dart';
-import '../../../utils/app_colors.dart';
-import '../../../utils/dialog_utils.dart';
-import '../..//view_model/auth_view_models/register_view_model.dart';
-import '../../shared_components/custom_auth_button.dart';
-import '../../shared_components/custom_text_field.dart';
-import '../../shared_components/route_logo.dart';
-import '../../view_model/base_states.dart';
+import '../../../../utils/app_colors.dart';
+import '../../../../utils/dialog_utils.dart';
+import '../../../shared_components/custom_auth_button.dart';
+import '../../../shared_components/custom_text_field.dart';
+import '../../../shared_components/route_logo.dart';
+import '../../../view_model/auth_view_models/register_view_model.dart';
+import '../../../view_model/base_states.dart';
 
 class RegisterScreen extends StatefulWidget {
   static String routeName = "registerScreen";
@@ -24,14 +22,14 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  RegisterViewModel viewModel =
-      RegisterViewModel(RegisterUseCase(AuthRepoImpl(Connectivity())));
+  RegisterViewModel viewModel = getIt();
+
   bool passwordObscurity = true;
   bool rePasswordObscurity = true;
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: AppColors.transparent,
         statusBarIconBrightness: Brightness.light));
     return Scaffold(
@@ -43,7 +41,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               switch (state) {
                 case BaseLoadingState():
                   showLoading(context);
-                  print("state => $state");
+
 
                 case BaseErrorState():
                   Navigator.pop(context);
@@ -51,7 +49,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     content: Text(state.errorMessage),
                     backgroundColor: Colors.red,
                   ));
-                  print("state => $state");
 
                 case BaseSuccessState():
                   Navigator.pop(context);

@@ -1,6 +1,8 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:ecommerce_app/data/data_utils/user_utils.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../domain/repos/auth_repo.dart';
 import '../../utils/networking/api_constants.dart';
@@ -8,10 +10,11 @@ import '../models/failure.dart';
 import '../models/requests/register_request.dart';
 import '../models/responses/auth_response.dart';
 
+@Injectable(as: AuthRepo)
 class AuthRepoImpl extends AuthRepo {
   late Dio dio;
 
-  AuthRepoImpl(this.connectivity) {
+  AuthRepoImpl(this.connectivity, this.userUtils) {
     final options = BaseOptions(
       baseUrl: ApiConstants.baseUrl,
       connectTimeout: const Duration(seconds: 20),
@@ -28,7 +31,8 @@ class AuthRepoImpl extends AuthRepo {
         responseHeader: true));
   }
 
-  Connectivity connectivity;
+  final Connectivity connectivity;
+  final UserUtils userUtils;
 
   @override
   Future<Either<Failure, bool>> login(
@@ -44,6 +48,8 @@ class AuthRepoImpl extends AuthRepo {
         AuthResponse loginResponse = AuthResponse.fromJson(serverResponse.data);
         if (serverResponse.statusCode! >= 200 &&
             serverResponse.statusCode! < 300) {
+          userUtils.saveUser(loginResponse.user!);
+          userUtils.saveToken(loginResponse.token!);
           return const Right(true);
         } else {
           return Left(Failure(loginResponse.message ??
@@ -71,6 +77,8 @@ class AuthRepoImpl extends AuthRepo {
             AuthResponse.fromJson(serverResponse.data);
         if (serverResponse.statusCode! >= 200 &&
             serverResponse.statusCode! < 300) {
+          userUtils.saveUser(registerResponse.user!);
+          userUtils.saveToken(registerResponse.token!);
           return const Right(true);
         } else {
           return Left(Failure(registerResponse.message ??

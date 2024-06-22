@@ -1,22 +1,21 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:ecommerce_app/domain/di/di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../data/repos/auth_repo_impl.dart';
-import '../../../domain/use_cases/login_use_case.dart';
-import '../../../utils/app_colors.dart';
-import '../../../utils/dialog_utils.dart';
-import '../../auth_screens/register_screen/register_screen.dart';
-import '../../shared_components/custom_auth_button.dart';
-import '../../shared_components/custom_text_field.dart';
-import '../../shared_components/route_logo.dart';
-import '../../view_model/auth_view_models/login_view_model.dart';
-import '../../view_model/base_states.dart';
+import '../../../../utils/app_colors.dart';
+import '../../../../utils/dialog_utils.dart';
+import '../../../shared_components/custom_auth_button.dart';
+import '../../../shared_components/custom_text_field.dart';
+import '../../../shared_components/route_logo.dart';
+import '../../../view_model/auth_view_models/login_view_model.dart';
+import '../../../view_model/base_states.dart';
+import '../register_screen/register_screen.dart';
+
 
 class LoginScreen extends StatefulWidget {
-  static String routeName = "";
+  static const String routeName = "loginScreen";
 
   const LoginScreen({super.key});
 
@@ -25,13 +24,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  LoginViewModel viewModel =
-      LoginViewModel(LoginUseCase(AuthRepoImpl(Connectivity())));
+  final LoginViewModel viewModel = getIt();
+
   bool isObscure = true;
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: AppColors.transparent,
         statusBarIconBrightness: Brightness.light));
     return Scaffold(

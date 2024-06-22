@@ -1,11 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../data/models/failure.dart';
 import '../../../domain/use_cases/login_use_case.dart';
 import '../base_states.dart';
 
+@injectable
 class LoginViewModel extends Cubit<BaseState> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController email = TextEditingController();

@@ -36,7 +36,7 @@ class CustomTextField extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(top: 15.h),
             child: TextFormField(
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
               cursorColor: AppColors.primary,
               controller: controller,
               validator: validator,

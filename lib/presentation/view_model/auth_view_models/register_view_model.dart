@@ -1,12 +1,13 @@
 import 'package:dartz/dartz.dart';
+import 'package:ecommerce_app/data/models/failure.dart';
+import 'package:ecommerce_app/data/models/requests/register_request.dart';
+import 'package:ecommerce_app/domain/use_cases/register_use_case.dart';
+import 'package:ecommerce_app/presentation/view_model/base_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
-import '../../../data/models/failure.dart';
-import '../../../data/models/requests/register_request.dart';
-import '../../../domain/use_cases/register_use_case.dart';
-import '../base_states.dart';
-
+@injectable
 class RegisterViewModel extends Cubit<BaseState> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController name = TextEditingController();
@@ -32,6 +33,6 @@ class RegisterViewModel extends Cubit<BaseState> {
             rePassword: rePassword.text));
 
     response.fold((error) => emit(BaseErrorState(error.errorMessage)),
-        (success) => emit(BaseSuccessState()));
+            (success) => emit(BaseSuccessState()));
   }
 }

@@ -1,8 +1,10 @@
 import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../data/models/failure.dart';
 import '../repos/auth_repo.dart';
 
+@injectable
 class LoginUseCase {
   AuthRepo authRepo;
 
