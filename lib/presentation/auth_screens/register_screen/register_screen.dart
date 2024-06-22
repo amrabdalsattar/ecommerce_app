@@ -1,14 +1,14 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:ecommerce_app/domain/use_cases/register_use_case.dart';
-import 'package:ecommerce_app/presentation/view_model/auth_view_models/register_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../data/repos/auth_repo_impl.dart';
+import '../../../domain/use_cases/register_use_case.dart';
 import '../../../utils/app_colors.dart';
 import '../../../utils/dialog_utils.dart';
+import '../..//view_model/auth_view_models/register_view_model.dart';
 import '../../shared_components/custom_auth_button.dart';
 import '../../shared_components/custom_text_field.dart';
 import '../../shared_components/route_logo.dart';
@@ -16,6 +16,7 @@ import '../../view_model/base_states.dart';
 
 class RegisterScreen extends StatefulWidget {
   static String routeName = "registerScreen";
+
   const RegisterScreen({super.key});
 
   @override
@@ -78,7 +79,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           return "Name is Required";
                         }
                         if (!RegExp(r"[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$")
-                            .hasMatch(name) ||
+                                .hasMatch(name) ||
                             !name.contains(" ")) {
                           return "Please Enter your Full Name";
                         }

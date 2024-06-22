@@ -15,7 +15,7 @@ void showLoading(BuildContext context){
                 borderRadius: BorderRadius.circular(16),
                 color: AppColors.white,
               ),
-              child: CircularProgressIndicator(
+              child: const CircularProgressIndicator(
                 color: AppColors.primary,
               ),
             ),

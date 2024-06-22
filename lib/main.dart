@@ -1,6 +1,6 @@
-import 'package:ecommerce_app/presentation/auth_screens/login_screen/login_screen.dart';
-import 'package:ecommerce_app/presentation/auth_screens/register_screen/register_screen.dart';
-import 'package:ecommerce_app/utils/app_themes.dart';
+import 'presentation/auth_screens/login_screen/login_screen.dart';
+import 'presentation/auth_screens/register_screen/register_screen.dart';
+import 'utils/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

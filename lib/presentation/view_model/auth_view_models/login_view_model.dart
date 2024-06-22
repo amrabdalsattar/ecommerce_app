@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecommerce_app/domain/use_cases/login_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/models/failure.dart';
+import '../../../domain/use_cases/login_use_case.dart';
 import '../base_states.dart';
 
 class LoginViewModel extends Cubit<BaseState> {
@@ -16,11 +16,10 @@ class LoginViewModel extends Cubit<BaseState> {
   LoginUseCase useCase;
 
   void login() async {
-
     if (!formKey.currentState!.validate()) return;
     emit(BaseLoadingState());
-    Either<Failure, bool> response = await useCase.executeLogin(
-        email: email.text, password: password.text);
+    Either<Failure, bool> response =
+        await useCase.executeLogin(email: email.text, password: password.text);
 
     response.fold((error) => emit(BaseErrorState(error.errorMessage)),
         (success) => emit(BaseSuccessState()));

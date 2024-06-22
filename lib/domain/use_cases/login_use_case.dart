@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecommerce_app/data/models/failure.dart';
-import 'package:ecommerce_app/domain/repos/auth_repo.dart';
+
+import '../../data/models/failure.dart';
+import '../repos/auth_repo.dart';
 
 class LoginUseCase {
   AuthRepo authRepo;

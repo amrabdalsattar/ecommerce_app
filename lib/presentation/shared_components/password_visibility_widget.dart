@@ -23,6 +23,6 @@ class _PasswordVisibilityWidgetState extends State<PasswordVisibilityWidget> {
           });
         },
         icon: widget.isObscure ? const Icon(Icons.visibility_off) : const Icon(
-            Icons.visibility));;
+            Icons.visibility));
   }
 }
