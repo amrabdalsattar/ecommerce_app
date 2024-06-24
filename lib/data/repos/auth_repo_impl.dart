@@ -1,7 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:ecommerce_app/data/data_utils/user_utils.dart';
+import 'package:ecommerce_app/data/data_utils/cache_helper.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../domain/repos/auth_repo.dart';
@@ -14,7 +14,7 @@ import '../models/responses/auth_response.dart';
 class AuthRepoImpl extends AuthRepo {
   late Dio dio;
 
-  AuthRepoImpl(this.connectivity, this.userUtils) {
+  AuthRepoImpl(this.connectivity) {
     final options = BaseOptions(
       baseUrl: ApiConstants.baseUrl,
       connectTimeout: const Duration(seconds: 20),
@@ -32,7 +32,6 @@ class AuthRepoImpl extends AuthRepo {
   }
 
   final Connectivity connectivity;
-  final UserUtils userUtils;
 
   @override
   Future<Either<Failure, bool>> login(
@@ -48,8 +47,8 @@ class AuthRepoImpl extends AuthRepo {
         AuthResponse loginResponse = AuthResponse.fromJson(serverResponse.data);
         if (serverResponse.statusCode! >= 200 &&
             serverResponse.statusCode! < 300) {
-          userUtils.saveUser(loginResponse.user!);
-          userUtils.saveToken(loginResponse.token!);
+          CacheData.setData(key: "user", value: loginResponse.user);
+          CacheData.setData(key: "token", value: loginResponse.token);
           return const Right(true);
         } else {
           return Left(Failure(loginResponse.message ??
@@ -77,8 +76,8 @@ class AuthRepoImpl extends AuthRepo {
             AuthResponse.fromJson(serverResponse.data);
         if (serverResponse.statusCode! >= 200 &&
             serverResponse.statusCode! < 300) {
-          userUtils.saveUser(registerResponse.user!);
-          userUtils.saveToken(registerResponse.token!);
+          CacheData.setData(key: "user", value: registerResponse.user);
+          CacheData.setData(key: "token", value: registerResponse.token);
           return const Right(true);
         } else {
           return Left(Failure(registerResponse.message ??

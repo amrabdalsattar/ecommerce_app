@@ -1,28 +1,30 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class CacheData {
-  static late SharedPreferences sharedPreferences;
+import '../models/responses/auth_response.dart';
 
-  static void cacheInitialization() async {
-    sharedPreferences = await SharedPreferences.getInstance();
+class CacheData {
+  static late SharedPreferences _sharedPreferences;
+
+  static Future<void> cacheInitialization() async {
+    _sharedPreferences = await SharedPreferences.getInstance();
   }
 
   /// setter
   static Future<bool> setData({required String key, required dynamic value}) async {
     if (value is String) {
-      await sharedPreferences.setString(key, value);
+      await _sharedPreferences.setString(key, value);
       return true;
     }
     if (value is bool) {
-      await sharedPreferences.setBool(key, value);
+      await _sharedPreferences.setBool(key, value);
       return true;
     }
     if (value is int) {
-      await sharedPreferences.setInt(key, value);
+      await _sharedPreferences.setInt(key, value);
       return true;
     }
     if (value is double) {
-      await sharedPreferences.setDouble(key, value);
+      await _sharedPreferences.setDouble(key, value);
       return true;
     }
     return false;
@@ -30,11 +32,17 @@ class CacheData {
 
   /// getter
   static dynamic getData({required String key}) {
-    return sharedPreferences.get(key);
+    return _sharedPreferences.get(key);
   }
 
   /// remover
   static void removeData({required String key}) {
-    sharedPreferences.remove(key);
+    _sharedPreferences.remove(key);
+  }
+
+  static User? getUSer() {
+    String? userAsString = _sharedPreferences.getString("user");
+    if(userAsString == null) return null;
+    return User.fromJson(userAsString);
   }
 }

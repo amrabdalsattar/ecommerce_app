@@ -1,14 +1,16 @@
-import 'package:ecommerce_app/domain/di/di.dart';
-import 'package:ecommerce_app/presentation/screens/auth_screens/login_screen/login_screen.dart';
-import 'package:ecommerce_app/presentation/screens/auth_screens/register_screen/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'data/data_utils/cache_helper.dart';
+import 'domain/di/di.dart';
+import 'presentation/screens/auth_screens/login_screen/login_screen.dart';
+import 'presentation/screens/auth_screens/register_screen/register_screen.dart';
+import 'presentation/screens/main_screen/main_screen.dart';
 import 'utils/app_themes.dart';
 
-void main() {
-  CacheData.cacheInitialization();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await CacheData.cacheInitialization();
   configureDependencies();
   runApp(const ECommerceApp());
 }
@@ -18,6 +20,7 @@ class ECommerceApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("${CacheData.getData(key: "token")}");
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       minTextAdapt: true,
@@ -26,11 +29,15 @@ class ECommerceApp extends StatelessWidget {
         routes: {
           RegisterScreen.routeName: (_) => const RegisterScreen(),
           LoginScreen.routeName: (_) => const LoginScreen(),
+          MainScreen.routeName: (_) => const MainScreen(),
         },
+        initialRoute: CacheData.getData(key: "token") == null
+            ? LoginScreen.routeName
+            : LoginScreen.routeName,
         theme: AppThemes.lightTheme,
         debugShowCheckedModeBanner: false,
         title: 'E-commerce App',
-        home: const LoginScreen(),
+        home: const MainScreen(),
       ),
     );
   }

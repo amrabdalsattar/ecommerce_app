@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class AppThemes {
   static ThemeData lightTheme = ThemeData(
       fontFamily: 'Poppins',
-      scaffoldBackgroundColor: AppColors.primary,
+      scaffoldBackgroundColor: AppColors.white,
       primaryColor: AppColors.primary,
       textTheme: TextTheme(
           headlineLarge: TextStyle(

@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/domain/di/di.dart';
+import 'package:ecommerce_app/presentation/screens/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,6 +34,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         statusBarColor: AppColors.transparent,
         statusBarIconBrightness: Brightness.light));
     return Scaffold(
+      backgroundColor: AppColors.primary,
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -41,7 +43,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
               switch (state) {
                 case BaseLoadingState():
                   showLoading(context);
-
 
                 case BaseErrorState():
                   Navigator.pop(context);
@@ -52,10 +53,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                 case BaseSuccessState():
                   Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Registered Successfully"),
-                    backgroundColor: Colors.green,
-                  ));
+                  Navigator.pushReplacementNamed(context, MainScreen.routeName);
               }
             },
             bloc: viewModel,

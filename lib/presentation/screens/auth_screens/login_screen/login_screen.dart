@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/domain/di/di.dart';
+import 'package:ecommerce_app/presentation/screens/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,6 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
         statusBarColor: AppColors.transparent,
         statusBarIconBrightness: Brightness.light));
     return Scaffold(
+      backgroundColor: AppColors.primary,
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -52,10 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 case BaseSuccessState():
                   Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Signed in Successfully"),
-                    backgroundColor: Colors.green,
-                  ));
+                  Navigator.pushReplacementNamed(context, MainScreen.routeName);
               }
             },
             bloc: viewModel,
@@ -68,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     const RouteLogo(),
                     SizedBox(
-                      height: 50.h,
+                      height: 50,
                     ),
                     Text(
                       "Welcome Back To Route",
@@ -78,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       "Please Sign in with your mail",
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
-                    SizedBox(height: 2.h),
+                    SizedBox(height: 2),
                     CustomTextField(
                       validator: (email) {
                         if (email == null || email.isEmpty) {

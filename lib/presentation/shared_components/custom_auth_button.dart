@@ -1,6 +1,5 @@
 import '../../utils/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomAuthButton extends StatelessWidget {
   final void Function()? onPressed;
@@ -11,10 +10,10 @@ class CustomAuthButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 48.h,
+      height: 48,
       child: ElevatedButton(
           style: ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(AppColors.white),
+              backgroundColor: const WidgetStatePropertyAll(AppColors.white),
               shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16)))),
           onPressed: onPressed,
