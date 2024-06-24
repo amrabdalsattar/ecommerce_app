@@ -11,9 +11,8 @@ import '../../../shared_components/custom_auth_button.dart';
 import '../../../shared_components/custom_text_field.dart';
 import '../../../shared_components/route_logo.dart';
 import '../../../view_model/auth_view_models/login_view_model.dart';
-import '../../../view_model/base_states.dart';
+import '../../../view_model/states/base_states.dart';
 import '../register_screen/register_screen.dart';
-
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = "loginScreen";
@@ -33,7 +32,11 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: AppColors.transparent,
-        statusBarIconBrightness: Brightness.light));
+        statusBarIconBrightness: Brightness.light,
+        systemNavigationBarColor: AppColors.primary,
+        systemNavigationBarDividerColor: AppColors.primary,
+        systemNavigationBarContrastEnforced: true,
+        systemNavigationBarIconBrightness: Brightness.light));
     return Scaffold(
       backgroundColor: AppColors.primary,
       body: SafeArea(

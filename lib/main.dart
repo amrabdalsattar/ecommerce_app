@@ -29,15 +29,15 @@ class ECommerceApp extends StatelessWidget {
         routes: {
           RegisterScreen.routeName: (_) => const RegisterScreen(),
           LoginScreen.routeName: (_) => const LoginScreen(),
-          MainScreen.routeName: (_) => const MainScreen(),
+          MainScreen.routeName: (_) => MainScreen(),
         },
         initialRoute: CacheData.getData(key: "token") == null
             ? LoginScreen.routeName
-            : LoginScreen.routeName,
+            : MainScreen.routeName,
         theme: AppThemes.lightTheme,
         debugShowCheckedModeBanner: false,
         title: 'E-commerce App',
-        home: const MainScreen(),
+        home: MainScreen(),
       ),
     );
   }

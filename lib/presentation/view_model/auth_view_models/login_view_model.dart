@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../data/models/failure.dart';
 import '../../../domain/use_cases/login_use_case.dart';
-import '../base_states.dart';
+import '../states/base_states.dart';
 
 @injectable
 class LoginViewModel extends Cubit<BaseState> {

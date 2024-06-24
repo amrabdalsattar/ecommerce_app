@@ -2,8 +2,9 @@ import 'app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AppThemes {
+abstract class AppThemes {
   static ThemeData lightTheme = ThemeData(
+    canvasColor: AppColors.primary,
       fontFamily: 'Poppins',
       scaffoldBackgroundColor: AppColors.white,
       primaryColor: AppColors.primary,
@@ -23,6 +24,6 @@ class AppThemes {
         bodySmall: TextStyle(
             fontSize: 12.sp,
             fontWeight: FontWeight.w100),
-      )
+      ),
   );
 }

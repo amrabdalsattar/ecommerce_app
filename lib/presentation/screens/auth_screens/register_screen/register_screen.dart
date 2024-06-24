@@ -11,7 +11,7 @@ import '../../../shared_components/custom_auth_button.dart';
 import '../../../shared_components/custom_text_field.dart';
 import '../../../shared_components/route_logo.dart';
 import '../../../view_model/auth_view_models/register_view_model.dart';
-import '../../../view_model/base_states.dart';
+import '../../../view_model/states/base_states.dart';
 
 class RegisterScreen extends StatefulWidget {
   static String routeName = "registerScreen";
@@ -32,7 +32,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: AppColors.transparent,
-        statusBarIconBrightness: Brightness.light));
+        statusBarIconBrightness: Brightness.light,
+        systemNavigationBarColor: AppColors.primary));
     return Scaffold(
       backgroundColor: AppColors.primary,
       body: SafeArea(
