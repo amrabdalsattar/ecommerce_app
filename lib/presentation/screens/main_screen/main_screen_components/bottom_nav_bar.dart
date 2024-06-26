@@ -9,23 +9,27 @@ class CustomBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-        showSelectedLabels: false,
-        currentIndex: viewModel.currentIndex,
-        type: BottomNavigationBarType.shifting,
-        elevation: 0,
-        onTap: (index) {
-          viewModel.toggleCurrentTab = index;
-        },
-        items: [
-          viewModel.buildBottomNavIcon(
-              AppAssets.homeIcon, viewModel.currentIndex == 0),
-          viewModel.buildBottomNavIcon(
-              AppAssets.categoriesIcon, viewModel.currentIndex == 1),
-          viewModel.buildBottomNavIcon(
-              AppAssets.favouritesIcon, viewModel.currentIndex == 2),
-          viewModel.buildBottomNavIcon(
-              AppAssets.profileIcon, viewModel.currentIndex == 3),
-        ]);
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+      child: BottomNavigationBar(
+          showSelectedLabels: false,
+          currentIndex: viewModel.currentIndex,
+          type: BottomNavigationBarType.shifting,
+          elevation: 0,
+          onTap: (index) {
+            viewModel.toggleCurrentTab = index;
+          },
+          items: [
+            viewModel.buildBottomNavIcon(
+                AppAssets.homeIcon, viewModel.currentIndex == 0),
+            viewModel.buildBottomNavIcon(
+                AppAssets.categoriesIcon, viewModel.currentIndex == 1),
+            viewModel.buildBottomNavIcon(
+                AppAssets.favouritesIcon, viewModel.currentIndex == 2),
+            viewModel.buildBottomNavIcon(
+                AppAssets.profileIcon, viewModel.currentIndex == 3),
+          ]),
+    );
   }
 }

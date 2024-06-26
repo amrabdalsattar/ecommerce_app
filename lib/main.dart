@@ -20,7 +20,6 @@ class ECommerceApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("${CacheData.getData(key: "token")}");
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       minTextAdapt: true,
@@ -33,7 +32,7 @@ class ECommerceApp extends StatelessWidget {
         },
         initialRoute: CacheData.getData(key: "token") == null
             ? LoginScreen.routeName
-            : MainScreen.routeName,
+            : LoginScreen.routeName,
         theme: AppThemes.lightTheme,
         debugShowCheckedModeBanner: false,
         title: 'E-commerce App',

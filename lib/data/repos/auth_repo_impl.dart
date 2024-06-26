@@ -6,30 +6,16 @@ import 'package:injectable/injectable.dart';
 
 import '../../domain/repos/auth_repo.dart';
 import '../../utils/networking/api_constants.dart';
+import '../../utils/networking/api_factory.dart';
 import '../models/failure.dart';
 import '../models/requests/register_request.dart';
 import '../models/responses/auth_response.dart';
 
 @Injectable(as: AuthRepo)
 class AuthRepoImpl extends AuthRepo {
-  late Dio dio;
+  final ApiFactory api;
 
-  AuthRepoImpl(this.connectivity) {
-    final options = BaseOptions(
-      baseUrl: ApiConstants.baseUrl,
-      connectTimeout: const Duration(seconds: 20),
-      receiveTimeout: const Duration(seconds: 20),
-      receiveDataWhenStatusError: true,
-    );
-    dio = Dio(options);
-    dio.interceptors.add(LogInterceptor(
-        error: true,
-        request: true,
-        requestBody: true,
-        requestHeader: true,
-        responseBody: true,
-        responseHeader: true));
-  }
+  AuthRepoImpl(this.connectivity, this.api);
 
   final Connectivity connectivity;
 
@@ -40,22 +26,16 @@ class AuthRepoImpl extends AuthRepo {
         await (connectivity.checkConnectivity());
     if (connectivityResult.contains(ConnectivityResult.wifi) ||
         connectivityResult.contains(ConnectivityResult.mobile)) {
-      try {
-        Response serverResponse = await dio.post(ApiConstants.loginEndPoint,
-            data: {"email": email, "password": password});
-
-        AuthResponse loginResponse = AuthResponse.fromJson(serverResponse.data);
-        if (serverResponse.statusCode! >= 200 &&
-            serverResponse.statusCode! < 300) {
-          CacheData.setData(key: "user", value: loginResponse.user);
-          CacheData.setData(key: "token", value: loginResponse.token);
-          return const Right(true);
-        } else {
-          return Left(Failure(loginResponse.message ??
-              "Something went wrong, please try again later"));
-        }
-      } catch (e) {
-        return left(Failure("Wrong Email or Password"));
+      final serverResponse = await api.post(ApiConstants.loginEndPoint,
+          data: {"email": email, "password": password});
+      AuthResponse loginResponse = AuthResponse.fromJson(serverResponse);
+      if (loginResponse.token != null) {
+        CacheData.setData(key: "user", value: loginResponse.user);
+        CacheData.setData(key: "token", value: loginResponse.token);
+        return const Right(true);
+      } else {
+        return Left(Failure(loginResponse.message ??
+            "Something went wrong, please try again later"));
       }
     } else {
       return left(NetworkFailure("Check your Internet Connection !"));
@@ -71,7 +51,7 @@ class AuthRepoImpl extends AuthRepo {
         connectivityResult.contains(ConnectivityResult.mobile)) {
       try {
         Response serverResponse =
-            await dio.post(ApiConstants.registerEndPoint, data: data.toJson());
+            await api.post(ApiConstants.registerEndPoint, data: data.toJson());
         AuthResponse registerResponse =
             AuthResponse.fromJson(serverResponse.data);
         if (serverResponse.statusCode! >= 200 &&

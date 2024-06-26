@@ -25,15 +25,15 @@ class MainScreenViewModel extends Cubit{
   buildBottomNavIcon(String asset, bool selected){
     return BottomNavigationBarItem(
         icon: selected ? CircleAvatar(
-          radius: 20,
+          radius: 18.sp,
           backgroundColor: AppColors.white,
           child: ImageIcon(
             AssetImage(asset),
-            size: 20.sp,
+            size: 18.sp,
             color: AppColors.primary,
           ),
         )
-            : ImageIcon(AssetImage(asset), size: 20.sp, color: AppColors.white,), label: ""
+            : ImageIcon(AssetImage(asset), size: 18.sp, color: AppColors.white,), label: ""
     );
   }
 
