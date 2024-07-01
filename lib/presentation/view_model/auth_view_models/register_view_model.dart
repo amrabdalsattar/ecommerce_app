@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:ecommerce_app/data/models/failure.dart';
 import 'package:ecommerce_app/data/models/requests/register_request.dart';
-import 'package:ecommerce_app/domain/use_cases/register_use_case.dart';
+import 'package:ecommerce_app/domain/use_cases/auth_use_cases/register_use_case.dart';
 import 'package:ecommerce_app/presentation/view_model/states/base_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

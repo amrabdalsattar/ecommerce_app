@@ -32,7 +32,7 @@ class ECommerceApp extends StatelessWidget {
         },
         initialRoute: CacheData.getData(key: "token") == null
             ? LoginScreen.routeName
-            : LoginScreen.routeName,
+            : MainScreen.routeName,
         theme: AppThemes.lightTheme,
         debugShowCheckedModeBanner: false,
         title: 'E-commerce App',

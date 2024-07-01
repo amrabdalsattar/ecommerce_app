@@ -5,4 +5,7 @@ class BaseErrorState extends BaseState{
   String errorMessage;
   BaseErrorState(this.errorMessage);
 }
-class BaseSuccessState extends BaseState{}
+class BaseSuccessState<T> extends BaseState{
+  T? data;
+  BaseSuccessState({this.data});
+}

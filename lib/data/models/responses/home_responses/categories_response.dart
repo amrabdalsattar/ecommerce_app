@@ -1,47 +1,39 @@
+import 'meta_data_response.dart';
+
 class CategoriesResponse {
-  CategoriesResponse({
-      this.results, 
-      this.metadata, 
-      this.data,});
+  CategoriesResponse(
+      {this.results, this.metadata, this.categories, this.message});
 
   CategoriesResponse.fromJson(dynamic json) {
     results = json['results'];
-    metadata = json['metadata'] != null ? Metadata.fromJson(json['metadata']) : null;
+    message = json['message'];
+    metadata =
+        json['metadata'] != null ? Metadata.fromJson(json['metadata']) : null;
     if (json['data'] != null) {
-      data = [];
+      categories = [];
       json['data'].forEach((v) {
-        data?.add(Data.fromJson(v));
+        categories?.add(CategoryDM.fromJson(v));
       });
     }
   }
+
   int? results;
   Metadata? metadata;
-  List<Data>? data;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['results'] = results;
-    if (metadata != null) {
-      map['metadata'] = metadata?.toJson();
-    }
-    if (data != null) {
-      map['data'] = data?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
-
+  List<CategoryDM>? categories;
+  String? message;
 }
 
-class Data {
-  Data({
-      this.id, 
-      this.name, 
-      this.slug, 
-      this.image, 
-      this.createdAt, 
-      this.updatedAt,});
+class CategoryDM {
+  CategoryDM({
+    this.id,
+    this.name,
+    this.slug,
+    this.image,
+    this.createdAt,
+    this.updatedAt,
+  });
 
-  Data.fromJson(dynamic json) {
+  CategoryDM.fromJson(dynamic json) {
     id = json['_id'];
     name = json['name'];
     slug = json['slug'];
@@ -49,6 +41,7 @@ class Data {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
   }
+
   String? id;
   String? name;
   String? slug;
@@ -66,30 +59,4 @@ class Data {
     map['updatedAt'] = updatedAt;
     return map;
   }
-
-}
-
-class Metadata {
-  Metadata({
-      this.currentPage, 
-      this.numberOfPages, 
-      this.limit,});
-
-  Metadata.fromJson(dynamic json) {
-    currentPage = json['currentPage'];
-    numberOfPages = json['numberOfPages'];
-    limit = json['limit'];
-  }
-  int? currentPage;
-  int? numberOfPages;
-  int? limit;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['currentPage'] = currentPage;
-    map['numberOfPages'] = numberOfPages;
-    map['limit'] = limit;
-    return map;
-  }
-
 }

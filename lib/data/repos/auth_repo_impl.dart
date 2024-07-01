@@ -1,8 +1,8 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:ecommerce_app/data/data_utils/cache_helper.dart';
 import 'package:injectable/injectable.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import '../../domain/repos/auth_repo.dart';
 import '../../utils/networking/api_constants.dart';
@@ -15,17 +15,14 @@ import '../models/responses/auth_response.dart';
 class AuthRepoImpl extends AuthRepo {
   final ApiFactory api;
 
-  AuthRepoImpl(this.connectivity, this.api);
-
-  final Connectivity connectivity;
+  AuthRepoImpl(this.api);
 
   @override
   Future<Either<Failure, bool>> login(
       {required String email, required String password}) async {
-    final List<ConnectivityResult> connectivityResult =
-        await (connectivity.checkConnectivity());
-    if (connectivityResult.contains(ConnectivityResult.wifi) ||
-        connectivityResult.contains(ConnectivityResult.mobile)) {
+    final bool isConnectedToInternet =
+        await InternetConnectionChecker().hasConnection;
+    if (isConnectedToInternet) {
       final serverResponse = await api.post(ApiConstants.loginEndPoint,
           data: {"email": email, "password": password});
       AuthResponse loginResponse = AuthResponse.fromJson(serverResponse);
@@ -45,10 +42,9 @@ class AuthRepoImpl extends AuthRepo {
   @override
   Future<Either<Failure, bool>> register(
       {required RegisterRequest data}) async {
-    final List<ConnectivityResult> connectivityResult =
-        await (connectivity.checkConnectivity());
-    if (connectivityResult.contains(ConnectivityResult.wifi) ||
-        connectivityResult.contains(ConnectivityResult.mobile)) {
+    final bool isConnectedToInternet =
+        await InternetConnectionChecker().hasConnection;
+    if (isConnectedToInternet) {
       try {
         Response serverResponse =
             await api.post(ApiConstants.registerEndPoint, data: data.toJson());

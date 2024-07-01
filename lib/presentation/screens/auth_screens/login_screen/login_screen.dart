@@ -69,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const RouteLogo(),
-                    SizedBox(
+                    const SizedBox(
                       height: 50,
                     ),
                     Text(
@@ -80,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       "Please Sign in with your mail",
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
-                    SizedBox(height: 2),
+                    const SizedBox(height: 2),
                     CustomTextField(
                       validator: (email) {
                         if (email == null || email.isEmpty) {
