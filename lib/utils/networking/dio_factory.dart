@@ -13,12 +13,12 @@ class DioFactory extends ApiFactory {
     dio.options.connectTimeout = const Duration(seconds: 5);
     dio.options.receiveTimeout = const Duration(seconds: 50);
     dio.interceptors.add(LogInterceptor(
-      request: true,
-      requestHeader: true,
-      requestBody: true,
-      responseHeader: true,
-      responseBody: true,
-      error: true,
+      request: false,
+      requestHeader: false,
+      requestBody: false,
+      responseHeader: false,
+      responseBody: false,
+      error: false,
     ));
   }
 

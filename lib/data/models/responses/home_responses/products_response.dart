@@ -13,9 +13,9 @@ class ProductsResponse {
     message = json['message'];
     metadata =
         json['metadata'] != null ? Metadata.fromJson(json['metadata']) : null;
-    if (json['products'] != null) {
+    if (json['data'] != null) {
       products = [];
-      json['products'].forEach((v) {
+      json['data'].forEach((v) {
         products?.add(Product.fromJson(v));
       });
     }

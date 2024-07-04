@@ -1,7 +1,8 @@
-import 'package:ecommerce_app/data/models/responses/home_responses/categories_response.dart';
-import 'package:ecommerce_app/presentation/screens/main_screen/tabs/home_tab/home_tab_components/categories/category_widget.dart';
+import '../../../../../data/models/responses/home_responses/categories_response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'category_widget.dart';
 
 class CategoriesGridView extends StatelessWidget {
   final List<CategoryDM> categories;

@@ -5,7 +5,13 @@ import 'app_colors.dart';
 
 abstract class AppThemes {
   static ThemeData lightTheme = ThemeData(
+    appBarTheme: const AppBarTheme(
+      backgroundColor: AppColors.white,
+      foregroundColor: AppColors.primary,
+      surfaceTintColor: AppColors.transparent
+    ),
     canvasColor: AppColors.primary,
+    splashColor: AppColors.primary,
     fontFamily: 'Poppins',
     scaffoldBackgroundColor: AppColors.white,
     primaryColor: AppColors.primary,

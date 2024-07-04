@@ -16,17 +16,23 @@ class CategoryWidget extends StatelessWidget {
         CircleAvatar(
           radius: 45,
           backgroundImage: CachedNetworkImageProvider(categoryDM.image ?? ''),
+          backgroundColor: AppColors.liteGrey,
         ),
-        SizedBox(height: 10.h,),
+        SizedBox(
+          height: 10.h,
+        ),
         SizedBox(
             child: Center(
                 child: Text(
-              categoryDM.name ?? "Unknown",
-              textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.primary),
-            )))
+          categoryDM.name ?? "Unknown",
+          textAlign: TextAlign.center,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context)
+              .textTheme
+              .bodySmall!
+              .copyWith(color: AppColors.primary),
+        )))
       ],
     );
   }

@@ -1,4 +1,6 @@
+import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'data/data_utils/cache_helper.dart';
@@ -36,7 +38,6 @@ class ECommerceApp extends StatelessWidget {
         theme: AppThemes.lightTheme,
         debugShowCheckedModeBanner: false,
         title: 'E-commerce App',
-        home: MainScreen(),
       ),
     );
   }

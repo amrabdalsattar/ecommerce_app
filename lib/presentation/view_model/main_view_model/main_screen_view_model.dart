@@ -1,11 +1,12 @@
-import 'package:ecommerce_app/presentation/screens/main_screen/tabs/categories_tab/categories_tab.dart';
-import 'package:ecommerce_app/presentation/screens/main_screen/tabs/favourites_tab/favourites_tab.dart';
-import 'package:ecommerce_app/presentation/screens/main_screen/tabs/home_tab/home_tab.dart';
-import 'package:ecommerce_app/presentation/screens/main_screen/tabs/profile_tab/profile_tab.dart';
 import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../tabs/categories_tab/categories_tab.dart';
+import '../../tabs/favourites_tab/favourites_tab.dart';
+import '../../tabs/home_tab/home_tab.dart';
+import '../../tabs/profile_tab/profile_tab.dart';
 
 class MainScreenViewModel extends Cubit{
   MainScreenViewModel() : super(MainInitialState());

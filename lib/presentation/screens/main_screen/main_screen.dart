@@ -1,8 +1,10 @@
 import 'package:ecommerce_app/presentation/screens/main_screen/main_screen_components/bottom_nav_bar.dart';
+import 'package:ecommerce_app/presentation/screens/main_screen/main_screen_components/custom_search_bar.dart';
 import 'package:ecommerce_app/presentation/view_model/main_view_model/main_screen_view_model.dart';
+import 'package:ecommerce_app/utils/app_assets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../utils/app_colors.dart';
 
@@ -15,19 +17,40 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(
-      statusBarColor: AppColors.transparent,
-      statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: AppColors.primary,
-    ));
     return BlocProvider(
       create: (_) => viewModel,
       child: BlocBuilder<MainScreenViewModel, dynamic>(
         bloc: viewModel,
         builder: (context, _) => Scaffold(
-          body: viewModel.tabs[viewModel.currentIndex],
-          bottomNavigationBar: CustomBottomNavBar(viewModel: viewModel,),
+          body: NestedScrollView(
+            headerSliverBuilder: (_, innerBoxIsScrolled) => [
+              SliverAppBar(
+                pinned: true,
+                floating: true,
+                snap: true,
+                title: Image.asset(AppAssets.blueLogo),
+                bottom: PreferredSize(
+                  preferredSize: const Size.fromHeight(50),
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 3),
+                    child: Row(
+                      children: [
+                        const CustomSearchBar(),
+                        const Spacer(),
+                        Container(
+                            margin: EdgeInsets.only(right: 25.w),
+                            child: Image.asset(AppAssets.cartIcon))
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            ],
+            body: viewModel.tabs[viewModel.currentIndex],
+          ),
+          bottomNavigationBar: CustomBottomNavBar(
+            viewModel: viewModel,
+          ),
         ),
       ),
     );

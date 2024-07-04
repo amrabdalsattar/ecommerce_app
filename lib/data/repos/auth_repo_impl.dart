@@ -31,8 +31,7 @@ class AuthRepoImpl extends AuthRepo {
         CacheData.setData(key: "token", value: loginResponse.token);
         return const Right(true);
       } else {
-        return Left(Failure(loginResponse.message ??
-            "Something went wrong, please try again later"));
+        return Left(Failure("Something went wrong, please try again later"));
       }
     } else {
       return left(NetworkFailure("Check your Internet Connection !"));
@@ -56,8 +55,7 @@ class AuthRepoImpl extends AuthRepo {
           CacheData.setData(key: "token", value: registerResponse.token);
           return const Right(true);
         } else {
-          return Left(Failure(registerResponse.message ??
-              "Something went wrong, please try again later"));
+          return Left(Failure("Something went wrong, please try again later"));
         }
       } catch (e) {
         return left(Failure(e.toString()));
