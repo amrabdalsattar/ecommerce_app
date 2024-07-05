@@ -28,6 +28,14 @@ abstract class AppThemes {
           fontSize: 13.sp,
           fontWeight: FontWeight.normal,
           color: AppColors.primary),
+      bodyLarge: TextStyle(
+          fontSize: 16.sp,
+          fontWeight: FontWeight.bold,
+          color: AppColors.primary),
+      bodyMedium: TextStyle(
+          fontSize: 14.sp,
+          fontWeight: FontWeight.normal,
+          color: AppColors.primary)
     ),
   );
 }

@@ -1,7 +1,7 @@
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/responses/auth_response.dart';
-
+@injectable
 class CacheData {
   static late SharedPreferences _sharedPreferences;
 
@@ -10,7 +10,8 @@ class CacheData {
   }
 
   /// setter
-  static Future<bool> setData({required String key, required dynamic value}) async {
+  static Future<bool> setData(
+      {required String key, required dynamic value}) async {
     if (value is String) {
       await _sharedPreferences.setString(key, value);
       return true;
@@ -38,11 +39,5 @@ class CacheData {
   /// remover
   static void removeData({required String key}) {
     _sharedPreferences.remove(key);
-  }
-
-  static User? getUSer() {
-    String? userAsString = _sharedPreferences.getString("user");
-    if(userAsString == null) return null;
-    return User.fromJson(userAsString);
   }
 }

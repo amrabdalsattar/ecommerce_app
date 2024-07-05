@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../utils/app_colors.dart';
 
 class MainScreen extends StatelessWidget {
   static const String routeName = "mainScreen";
@@ -32,7 +31,7 @@ class MainScreen extends StatelessWidget {
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(50),
                   child: Container(
-                    margin: const EdgeInsets.only(top: 3),
+                    margin: EdgeInsets.only(top: 2.8.h),
                     child: Row(
                       children: [
                         const CustomSearchBar(),

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:ecommerce_app/data/data_utils/cache_helper.dart';
 import 'package:ecommerce_app/data/models/failure.dart';
 import 'package:ecommerce_app/utils/networking/api_constants.dart';
 import 'package:ecommerce_app/utils/networking/api_factory.dart';
@@ -6,12 +7,19 @@ import 'package:injectable/injectable.dart';
 
 @Injectable(as: ApiFactory)
 class DioFactory extends ApiFactory {
-  final Dio dio;
 
+  late Dio dio;
   DioFactory({required this.dio}) {
-    dio.options.baseUrl = ApiConstants.baseUrl;
-    dio.options.connectTimeout = const Duration(seconds: 5);
-    dio.options.receiveTimeout = const Duration(seconds: 50);
+    final options = BaseOptions(
+        baseUrl: ApiConstants.baseUrl,
+        connectTimeout: const Duration(seconds: 20),
+        receiveTimeout: const Duration(seconds: 20),
+        receiveDataWhenStatusError: true,
+        headers: {
+          "token": CacheData.getData(key: "token")
+        }
+        );
+    dio = Dio(options);
     dio.interceptors.add(LogInterceptor(
       request: false,
       requestHeader: false,
@@ -25,11 +33,11 @@ class DioFactory extends ApiFactory {
   @override
   Future delete(String path,
       {Object? data,
-        Map<String, dynamic>? queryParameters,
-        bool isFormData = false}) async {
+      Map<String, dynamic>? queryParameters,
+      bool isFormData = false}) async {
     try {
       final response =
-      await dio.delete(path, data: data, queryParameters: queryParameters);
+          await dio.delete(path, data: data, queryParameters: queryParameters);
       return response.data;
     } catch (e) {
       Failure(e.toString());
@@ -41,7 +49,7 @@ class DioFactory extends ApiFactory {
       {Object? data, Map<String, dynamic>? queryParameters}) async {
     try {
       final response =
-      await dio.get(path, data: data, queryParameters: queryParameters);
+          await dio.get(path, data: data, queryParameters: queryParameters);
       return response.data;
     } catch (e) {
       Failure(e.toString());
@@ -51,13 +59,13 @@ class DioFactory extends ApiFactory {
   @override
   Future patch(String path,
       {Object? data,
-        Map<String, dynamic>? queryParameters,
-        bool isFormData = false}) async {
+      Map<String, dynamic>? queryParameters,
+      bool isFormData = false}) async {
     try {
       final response =
-      await dio.patch(path, data: data, queryParameters: queryParameters);
+          await dio.patch(path, data: data, queryParameters: queryParameters);
       return response.data;
-    }catch (e) {
+    } catch (e) {
       Failure(e.toString());
     }
   }
@@ -65,11 +73,11 @@ class DioFactory extends ApiFactory {
   @override
   Future post(String path,
       {Object? data,
-        Map<String, dynamic>? queryParameters,
-        bool isFormData = false}) async {
+      Map<String, dynamic>? queryParameters,
+      bool isFormData = false}) async {
     try {
       final response =
-      await dio.post(path, data: data, queryParameters: queryParameters);
+          await dio.post(path, data: data, queryParameters: queryParameters);
       return response.data;
     } catch (e) {
       Failure(e.toString());
@@ -79,11 +87,11 @@ class DioFactory extends ApiFactory {
   @override
   Future put(String path,
       {Object? data,
-        Map<String, dynamic>? queryParameters,
-        bool isFormData = false}) async {
+      Map<String, dynamic>? queryParameters,
+      bool isFormData = false}) async {
     try {
       final response =
-      await dio.put(path, data: data, queryParameters: queryParameters);
+          await dio.put(path, data: data, queryParameters: queryParameters);
       return response.data;
     } catch (e) {
       Failure(e.toString());

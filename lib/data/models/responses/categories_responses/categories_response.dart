@@ -1,8 +1,8 @@
-import 'meta_data_response.dart';
+import 'package:ecommerce_app/data/models/responses/base_response.dart';
 
-class CategoriesResponse {
-  CategoriesResponse(
-      {this.results, this.metadata, this.categories, this.message});
+import '../meta_data_response.dart';
+
+class CategoriesResponse extends BaseResponse {
 
   CategoriesResponse.fromJson(dynamic json) {
     results = json['results'];
@@ -20,18 +20,9 @@ class CategoriesResponse {
   int? results;
   Metadata? metadata;
   List<CategoryDM>? categories;
-  String? message;
 }
 
 class CategoryDM {
-  CategoryDM({
-    this.id,
-    this.name,
-    this.slug,
-    this.image,
-    this.createdAt,
-    this.updatedAt,
-  });
 
   CategoryDM.fromJson(dynamic json) {
     id = json['_id'];
@@ -49,14 +40,19 @@ class CategoryDM {
   String? createdAt;
   String? updatedAt;
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['_id'] = id;
-    map['name'] = name;
-    map['slug'] = slug;
-    map['image'] = image;
-    map['createdAt'] = createdAt;
-    map['updatedAt'] = updatedAt;
-    return map;
+}
+
+class Subcategory {
+
+  Subcategory.fromJson(dynamic json) {
+    id = json['id'];
+    name = json['name'];
+    slug = json['slug'];
+    category = json['category'];
   }
+
+  String? id;
+  String? name;
+  String? slug;
+  String? category;
 }

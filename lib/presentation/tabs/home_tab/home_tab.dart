@@ -73,7 +73,7 @@ class _HomeTabState extends State<HomeTab> {
             const HomeTitle(title: "Products"),
             SizedBox(height: 15.h,),
             SizedBox(
-              height: MediaQuery.sizeOf(context).height * 0.30,
+              height: MediaQuery.sizeOf(context).height * 0.28,
               child: BlocBuilder(
                 bloc: productsViewModel,
                 builder: (_, state) {

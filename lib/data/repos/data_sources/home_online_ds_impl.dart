@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:ecommerce_app/data/models/failure.dart';
-import 'package:ecommerce_app/data/models/responses/home_responses/categories_response.dart';
-import 'package:ecommerce_app/data/models/responses/home_responses/products_response.dart';
-import 'package:ecommerce_app/domain/repos/home_repo/data_sources/home_online_ds.dart';
+import 'package:ecommerce_app/data/models/responses/categories_responses/categories_response.dart';
+import 'package:ecommerce_app/data/models/responses/products_responses/products_response.dart';
 import 'package:ecommerce_app/utils/networking/api_factory.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../utils/networking/api_constants.dart';
+import '../../../domain/repos/data_sources/home_online_ds.dart';
 
 @Injectable(as: HomeOnlineDs)
 class HomeOnlineDSImpl extends HomeOnlineDs {
@@ -23,12 +23,12 @@ class HomeOnlineDSImpl extends HomeOnlineDs {
         categoriesResponse.categories!.isNotEmpty) {
       return Right(categoriesResponse.categories!);
     } else {
-      return Left(Failure(categoriesResponse.message!));
+      return Left(Failure(categoriesResponse.message?? "Something went Wrong!"));
     }
   }
 
   @override
-  Future<Either<Failure, List<Product>>> getProducts() async {
+  Future<Either<Failure, List<ProductDM>>> getProducts() async {
     final response = await api.get(ApiConstants.getAllProductsEndPoint);
     ProductsResponse productsResponse = ProductsResponse.fromJson(response);
     if (productsResponse.products != null ||

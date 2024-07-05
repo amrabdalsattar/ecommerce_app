@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ecommerce_app/data/models/responses/home_responses/products_response.dart';
+import 'package:ecommerce_app/data/models/responses/products_responses/products_response.dart';
 import 'package:ecommerce_app/presentation/shared_components/loading_widget.dart';
 import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../utils/app_assets.dart';
 
 class ProductWidget extends StatelessWidget {
-  final Product product;
+  final ProductDM product;
 
   const ProductWidget({super.key, required this.product});
 
@@ -16,7 +16,7 @@ class ProductWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(right: 14.w),
-      width: MediaQuery.sizeOf(context).width * 0.40,
+      width: MediaQuery.sizeOf(context).width * 0.44,
       decoration: BoxDecoration(
           border: Border.all(color: AppColors.liteBlue),
           borderRadius: BorderRadius.circular(20)),
@@ -65,30 +65,34 @@ class ProductWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    product.title ?? "",
+                    product.title??"",
                     style: Theme.of(context).textTheme.bodySmall,
                     maxLines: 1,
                     textAlign: TextAlign.start,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(height: 8.h,),
+                  SizedBox(height: 7.h,),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
+                        textBaseline: TextBaseline.alphabetic,
                         children: [
                           Text(
                             "Review (${product.ratingsAverage ?? 0})",
                             textAlign: TextAlign.start,
+                            style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 10.5.sp),
                           ),
-                          SizedBox(width: 5.w,),
+                          SizedBox(width: 10.w,),
                           Image.asset(AppAssets.star)
                         ],
                       ),
                       SizedBox(height: 2.h,),
                       Row(
                         children: [
-                          Text("EGP ${product.price ?? 0}", textAlign: TextAlign.start,),
+                          Text("EGP ${product.price ?? 0}",
+                            style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 11.sp),
+                            textAlign: TextAlign.start,),
                           const Spacer(),
                           SizedBox(
                             width: 34.w,

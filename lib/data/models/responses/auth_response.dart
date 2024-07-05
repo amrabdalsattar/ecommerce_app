@@ -1,15 +1,17 @@
-class AuthResponse {
+import 'base_response.dart';
+
+class AuthResponse extends BaseResponse {
   AuthResponse({
-      this.message, 
-      this.user, 
-      this.token,});
+    this.user,
+    this.token,
+  });
 
   AuthResponse.fromJson(dynamic json) {
     message = json['message'];
     user = json['user'] != null ? User.fromJson(json['user']) : null;
     token = json['token'];
   }
-  String? message;
+
   User? user;
   String? token;
 
@@ -22,20 +24,21 @@ class AuthResponse {
     map['token'] = token;
     return map;
   }
-
 }
 
 class User {
   User({
-      this.name, 
-      this.email, 
-      this.role,});
+    this.name,
+    this.email,
+    this.role,
+  });
 
   User.fromJson(dynamic json) {
     name = json['name'];
     email = json['email'];
     role = json['role'];
   }
+
   String? name;
   String? email;
   String? role;
@@ -47,5 +50,4 @@ class User {
     map['role'] = role;
     return map;
   }
-
 }

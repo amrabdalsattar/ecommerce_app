@@ -1,4 +1,4 @@
-import '../../../../../data/models/responses/home_responses/categories_response.dart';
+import '../../../../../data/models/responses/categories_responses/categories_response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

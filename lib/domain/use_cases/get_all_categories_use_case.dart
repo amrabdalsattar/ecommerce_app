@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:ecommerce_app/data/models/failure.dart';
-import 'package:ecommerce_app/data/models/responses/home_responses/categories_response.dart';
-import 'package:ecommerce_app/domain/repos/home_repo/home_repo.dart';
+import 'package:ecommerce_app/data/models/responses/categories_responses/categories_response.dart';
+import 'package:ecommerce_app/domain/repos/home_repo.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable

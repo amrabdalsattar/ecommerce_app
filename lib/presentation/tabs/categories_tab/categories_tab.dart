@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/data/data_utils/cache_helper.dart';
 import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -6,6 +7,7 @@ class CategoriesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: AppColors.grey,);
+    return Container(color: AppColors.grey,
+    child: Text(CacheData.getData(key: "name")),);
   }
 }

@@ -6,4 +6,5 @@ class ApiConstants {
   static const String registerEndPoint = "/api/v1/auth/signup";
   static const String getAllCategoriesEndPoint = "/api/v1/categories";
   static const String getAllProductsEndPoint = "/api/v1/products";
+  static const String getLoggedUserCartEndPoint = "/api/v1/cart";
 }

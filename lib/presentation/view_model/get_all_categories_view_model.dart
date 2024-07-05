@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data/models/failure.dart';
-import '../../data/models/responses/home_responses/categories_response.dart';
+import '../../data/models/responses/categories_responses/categories_response.dart';
 
 @injectable
 class GetAllCategoriesViewModel extends Cubit<BaseState> {

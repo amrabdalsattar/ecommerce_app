@@ -27,7 +27,8 @@ class AuthRepoImpl extends AuthRepo {
           data: {"email": email, "password": password});
       AuthResponse loginResponse = AuthResponse.fromJson(serverResponse);
       if (loginResponse.token != null) {
-        CacheData.setData(key: "user", value: loginResponse.user);
+        CacheData.setData(key: "name", value: loginResponse.user?.name);
+        CacheData.setData(key: "email", value: loginResponse.user?.email);
         CacheData.setData(key: "token", value: loginResponse.token);
         return const Right(true);
       } else {
@@ -51,7 +52,8 @@ class AuthRepoImpl extends AuthRepo {
             AuthResponse.fromJson(serverResponse.data);
         if (serverResponse.statusCode! >= 200 &&
             serverResponse.statusCode! < 300) {
-          CacheData.setData(key: "user", value: registerResponse.user);
+          CacheData.setData(key: "name", value: registerResponse.user?.name);
+          CacheData.setData(key: "email", value: registerResponse.user?.email);
           CacheData.setData(key: "token", value: registerResponse.token);
           return const Right(true);
         } else {
