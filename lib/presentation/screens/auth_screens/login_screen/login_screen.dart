@@ -50,11 +50,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 case BaseErrorState():
                   Navigator.pop(context);
-                  showSnackBar(context, state.errorMessage, AppColors.red);
+                  showToast(message: state.errorMessage, color: AppColors.red);
 
                 case BaseSuccessState():
                   Navigator.pop(context);
-                  showSnackBar(context, "Welcome Back!", AppColors.green);
                   Navigator.pushReplacementNamed(context, MainScreen.routeName);
               }
             },

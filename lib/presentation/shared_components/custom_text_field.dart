@@ -20,7 +20,9 @@ class CustomTextField extends StatelessWidget {
       required this.textInputType,
       this.validator,
       required this.controller,
-      required this.isPassword, this.isObscure = false, this.icon});
+      required this.isPassword,
+      this.isObscure = false,
+      this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -36,20 +38,24 @@ class CustomTextField extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(top: 15.h),
             child: TextFormField(
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.bold, color: AppColors.black),
               cursorColor: AppColors.primary,
               controller: controller,
               validator: validator,
               keyboardType: textInputType,
-              obscureText: isPassword? isObscure : false,
+              obscureText: isPassword ? isObscure : false,
               decoration: InputDecoration(
-                suffixIcon: isPassword ? icon: const SizedBox(width: 1, height: 1,),
+                suffixIcon: isPassword
+                    ? icon
+                    : const SizedBox(
+                        width: 1,
+                        height: 1,
+                      ),
                 hintText: hintText,
-                hintStyle: Theme.of(context).textTheme.bodySmall,
                 fillColor: AppColors.white,
                 filled: true,
-                contentPadding:
-                     EdgeInsets.symmetric(horizontal: 20.w),
+                contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
                 isDense: true,
                 border: OutlineInputBorder(
                     borderSide:

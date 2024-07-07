@@ -70,7 +70,7 @@ class _HomeTabState extends State<HomeTab> {
                 },
               ),
             ),
-            const HomeTitle(title: "Products"),
+            const HomeTitle(title: "Most Selling"),
             SizedBox(height: 15.h,),
             SizedBox(
               height: MediaQuery.sizeOf(context).height * 0.28,

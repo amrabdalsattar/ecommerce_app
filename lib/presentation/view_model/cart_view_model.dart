@@ -36,10 +36,8 @@ class CartViewModel extends Cubit<CartState> {
     emit(CartLoading());
     Either<Failure, CartDM> response = await removeFromCartUseCase.execute(id);
     response.fold((error) {
-      print(error.errorMessage);
       emit(CartError(error.errorMessage));
     }, (cart) {
-      print(cart);
       cartDM = cart;
       emit(CartSuccess(data: cartDM));
     });
@@ -56,11 +54,9 @@ class CartViewModel extends Cubit<CartState> {
   }
 
   Future<void> loading() async{
-    print("44454545445${isLoadingToCart}");
     emit(CartLoading());
   }
   Future<void> hideLoading() async{
-    print("hide44454545445$isLoadingToCart");
     emit(CartSuccess());
   }
 }

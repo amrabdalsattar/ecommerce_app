@@ -4,6 +4,7 @@ import 'package:ecommerce_app/domain/di/di.dart';
 import 'package:ecommerce_app/presentation/shared_components/loading_widget.dart';
 import 'package:ecommerce_app/presentation/view_model/cart_view_model.dart';
 import 'package:ecommerce_app/utils/app_colors.dart';
+import 'package:ecommerce_app/utils/dialog_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,10 +16,11 @@ class ProductWidget extends StatefulWidget {
   final bool isInCart;
   final CartViewModel cartViewModel;
 
-  const ProductWidget({super.key,
-    required this.product,
-    required this.isInCart,
-    required this.cartViewModel});
+  const ProductWidget(
+      {super.key,
+      required this.product,
+      required this.isInCart,
+      required this.cartViewModel});
 
   @override
   State<ProductWidget> createState() => _ProductWidgetState();
@@ -28,13 +30,12 @@ class _ProductWidgetState extends State<ProductWidget> {
   bool isLoadingToCart = false;
   CartViewModel viewModel = getIt();
 
+
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(right: 14.w),
-      width: MediaQuery
-          .sizeOf(context)
-          .width * 0.44,
+      width: MediaQuery.sizeOf(context).width * 0.44,
       decoration: BoxDecoration(
           border: Border.all(color: AppColors.liteBlue),
           borderRadius: BorderRadius.circular(20)),
@@ -54,9 +55,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                     placeholder: (_, __) => const LoadingWidget(),
                     errorWidget: (_, __, ___) => const Icon(Icons.error),
                     fit: BoxFit.cover,
-                    width: MediaQuery
-                        .sizeOf(context)
-                        .width,
+                    width: MediaQuery.sizeOf(context).width,
                   ),
                   Container(
                     padding: const EdgeInsets.all(5),
@@ -66,7 +65,6 @@ class _ProductWidgetState extends State<ProductWidget> {
                         borderRadius: BorderRadius.circular(30)),
                     child: Image.asset(
                       AppAssets.favouritesIcon,
-                      filterQuality: FilterQuality.high,
                       color: AppColors.primary,
                       height: 15.h,
                       width: 15.w,
@@ -86,12 +84,8 @@ class _ProductWidgetState extends State<ProductWidget> {
                 children: [
                   Text(
                     widget.product.title ?? "",
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .bodySmall,
+                    style: Theme.of(context).textTheme.bodySmall,
                     maxLines: 1,
-                    textAlign: TextAlign.start,
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(
@@ -101,15 +95,10 @@ class _ProductWidgetState extends State<ProductWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
-                        textBaseline: TextBaseline.alphabetic,
                         children: [
                           Text(
                             "Review (${widget.product.ratingsAverage ?? 0})",
-                            textAlign: TextAlign.start,
-                            style: Theme
-                                .of(context)
-                                .textTheme
-                                .bodySmall!
+                            style: Theme.of(context).textTheme.bodySmall!
                                 .copyWith(fontSize: 10.5.sp),
                           ),
                           SizedBox(
@@ -125,12 +114,8 @@ class _ProductWidgetState extends State<ProductWidget> {
                         children: [
                           Text(
                             "EGP ${widget.product.price ?? 0}",
-                            style: Theme
-                                .of(context)
-                                .textTheme
-                                .bodySmall!
+                            style: Theme.of(context).textTheme.bodySmall!
                                 .copyWith(fontSize: 11.sp),
-                            textAlign: TextAlign.start,
                           ),
                           const Spacer(),
                           SizedBox(
@@ -162,20 +147,26 @@ class _ProductWidgetState extends State<ProductWidget> {
                                     await widget.cartViewModel
                                         .addToCart(widget.product.id!);
                                     viewModel.hideLoading();
+                                    showToast(
+                                        message:
+                                            "${widget.product.title} has been successfully added to your cart!",
+                                        textColor: AppColors.primary,
+                                        color: AppColors.fadedWhite);
                                   }
                                 },
                                 backgroundColor: AppColors.primary,
                                 child: isLoadingToCart
                                     ? Container(
-                                    padding: const EdgeInsets.all(10),
-                                    child: const LoadingWidget(
-                                      color: AppColors.white,))
+                                        padding: const EdgeInsets.all(10),
+                                        child: const LoadingWidget(
+                                          color: AppColors.white,
+                                        ))
                                     : Icon(
-                                  widget.isInCart
-                                      ? Icons.remove
-                                      : Icons.add,
-                                  color: AppColors.white,
-                                ),
+                                        widget.isInCart
+                                            ? Icons.remove
+                                            : Icons.add,
+                                        color: AppColors.white,
+                                      ),
                               ),
                             ),
                           ),

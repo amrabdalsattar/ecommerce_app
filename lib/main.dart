@@ -19,20 +19,8 @@ void main() async {
       child: const ECommerceApp()));
 }
 
-class ECommerceApp extends StatefulWidget {
+class ECommerceApp extends StatelessWidget {
   const ECommerceApp({super.key});
-
-  @override
-  State<ECommerceApp> createState() => _ECommerceAppState();
-}
-
-class _ECommerceAppState extends State<ECommerceApp> {
-  @override
-  void initState() {
-    super.initState();
-    CartViewModel viewModel = BlocProvider.of(context);
-    viewModel.getCartList();
-  }
 
   @override
   Widget build(BuildContext context) {

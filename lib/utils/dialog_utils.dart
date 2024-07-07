@@ -1,4 +1,3 @@
-import 'package:ecommerce_app/utils/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -29,22 +28,21 @@ void showLoading(BuildContext context) {
       });
 }
 
-// void showToast(String message, Color color) {
-//   Fluttertoast.showToast(
-//     msg: message,
-//     gravity: ToastGravity.BOTTOM,
-//     backgroundColor: color,
-//     fontSize: 10.sp,
-//     toastLength: Toast.LENGTH_SHORT,
-//     timeInSecForIosWeb: 1,
-//   );
-// }
+void showToast({required String message, required Color color,Color textColor = AppColors.white}) {
+  Fluttertoast.showToast(
+    msg: message,
+    backgroundColor: color,
+    fontSize: 14.sp,
+    textColor: textColor,
+    toastLength: Toast.LENGTH_SHORT,
+  );
+}
 
 void showSnackBar(BuildContext context, String message, Color color) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     content: Text(
       message,
-      style: Theme.of(context).textTheme.bodySmall,
+      style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.white),
     ),
     backgroundColor: color,
   ));
