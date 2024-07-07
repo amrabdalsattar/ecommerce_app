@@ -21,12 +21,12 @@ class DioFactory extends ApiFactory {
         );
     dio = Dio(options);
     dio.interceptors.add(LogInterceptor(
-      request: false,
-      requestHeader: false,
-      requestBody: false,
-      responseHeader: false,
-      responseBody: false,
-      error: false,
+      request: true,
+      requestHeader: true,
+      requestBody: true,
+      responseHeader: true,
+      responseBody: true,
+      error: true,
     ));
   }
 

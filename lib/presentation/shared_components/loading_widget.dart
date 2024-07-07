@@ -2,13 +2,14 @@ import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class LoadingWidget extends StatelessWidget {
-  const LoadingWidget({super.key});
+  final Color color;
+  const LoadingWidget({super.key, this.color = AppColors.primary});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: CircularProgressIndicator(
-        color: AppColors.primary,
+        color: color,
       ),
     );
   }

@@ -17,34 +17,22 @@ class CartDataSourceImpl extends CartDataSource {
   Future<Either<Failure, CartDM>> getLoggedUserCart() async {
     final response = await api.get(ApiConstants.getLoggedUserCartEndPoint);
     CartResponse cartResponse = CartResponse.fromJson(response);
-    if (cartResponse.numOfCartItems != 0) {
-      return Right(cartResponse.cartData!);
-    } else {
-      return Left(Failure(cartResponse.message ?? "Something went Wrong!"));
-    }
+    return Right(cartResponse.cartData!);
   }
 
   @override
   Future<Either<Failure, CartDM>> addItemToCart(String id) async {
-    final response = await api.post(ApiConstants.getLoggedUserCartEndPoint, data: {
-      "productId": id
-    });
-    CartResponse cartResponse = CartResponse.fromJson(response);
-    if (cartResponse.numOfCartItems != 0) {
-      return getLoggedUserCart();
-    } else {
-      return Left(Failure(cartResponse.message ?? "Something went Wrong!"));
-    }
+    final response = await api
+        .post(ApiConstants.getLoggedUserCartEndPoint, data: {"productId": id});
+    return getLoggedUserCart();
   }
 
   @override
-  Future<Either<Failure, CartDM>> removeItemFromCart(String id) async{
-    final response = await api.delete("${ApiConstants.getLoggedUserCartEndPoint}/$id");
+  Future<Either<Failure, CartDM>> removeItemFromCart(String id) async {
+    final response =
+        await api.delete("${ApiConstants.getLoggedUserCartEndPoint}/$id");
     CartResponse cartResponse = CartResponse.fromJson(response);
-    if (cartResponse.numOfCartItems != 0) {
-      return getLoggedUserCart();
-    } else {
-      return Left(Failure(cartResponse.message ?? "Something went Wrong!"));
-    }
+
+    return getLoggedUserCart();
   }
 }

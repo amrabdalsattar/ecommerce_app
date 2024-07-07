@@ -14,11 +14,25 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacheData.cacheInitialization();
   configureDependencies();
-  runApp(const ECommerceApp());
+  runApp(BlocProvider(
+      create: (_) => getIt<CartViewModel>(),
+      child: const ECommerceApp()));
 }
 
-class ECommerceApp extends StatelessWidget {
+class ECommerceApp extends StatefulWidget {
   const ECommerceApp({super.key});
+
+  @override
+  State<ECommerceApp> createState() => _ECommerceAppState();
+}
+
+class _ECommerceAppState extends State<ECommerceApp> {
+  @override
+  void initState() {
+    super.initState();
+    CartViewModel viewModel = BlocProvider.of(context);
+    viewModel.getCartList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,23 +40,19 @@ class ECommerceApp extends StatelessWidget {
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (_, child) =>
-          BlocProvider(
-            create: (_) => getIt<CartViewModel>(),
-            child: MaterialApp(
-              routes: {
-                RegisterScreen.routeName: (_) => const RegisterScreen(),
-                LoginScreen.routeName: (_) => const LoginScreen(),
-                MainScreen.routeName: (_) => MainScreen(),
-              },
-              initialRoute: CacheData.getData(key: "token") == null
-                  ? LoginScreen.routeName
-                  : MainScreen.routeName,
-              theme: AppThemes.lightTheme,
-              debugShowCheckedModeBanner: false,
-              title: 'E-commerce App',
-            ),
-          ),
+      builder: (_, child) => MaterialApp(
+        routes: {
+          RegisterScreen.routeName: (_) => const RegisterScreen(),
+          LoginScreen.routeName: (_) => const LoginScreen(),
+          MainScreen.routeName: (_) => MainScreen(),
+        },
+        initialRoute: CacheData.getData(key: "token") == null
+            ? LoginScreen.routeName
+            : MainScreen.routeName,
+        theme: AppThemes.lightTheme,
+        debugShowCheckedModeBanner: false,
+        title: 'E-commerce App',
+      ),
     );
   }
 }
