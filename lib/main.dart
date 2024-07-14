@@ -1,8 +1,23 @@
-import 'package:ecommerce_app/utils/app_themes.dart';
+import 'package:ecommerce_app/presentation/view_model/cart_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
-  runApp(const ECommerceApp());
+import 'data/data_utils/cache_helper.dart';
+import 'domain/di/di.dart';
+import 'presentation/screens/auth_screens/login_screen/login_screen.dart';
+import 'presentation/screens/auth_screens/register_screen/register_screen.dart';
+import 'presentation/screens/main_screen/main_screen.dart';
+import 'presentation/tabs/home_tab/home_tab_components/products/product_details.dart';
+import 'utils/app_themes.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await CacheData.cacheInitialization();
+  configureDependencies();
+  runApp(BlocProvider(
+      create: (_) => getIt<CartViewModel>(),
+      child: const ECommerceApp()));
 }
 
 class ECommerceApp extends StatelessWidget {
@@ -10,11 +25,25 @@ class ECommerceApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: AppThemes.lightTheme,
-      debugShowCheckedModeBanner: false,
-      title: 'E-commerce App',
-      home: Scaffold(),
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (_, child) => MaterialApp(
+        routes: {
+          RegisterScreen.routeName: (_) => const RegisterScreen(),
+          LoginScreen.routeName: (_) => const LoginScreen(),
+          MainScreen.routeName: (_) => const MainScreen(),
+          ProductDetails.routeName: (_) => const ProductDetails(),
+        },
+        initialRoute: CacheData.getData(key: "token") == null
+            ? LoginScreen.routeName
+            : MainScreen.routeName,
+        theme: AppThemes.lightTheme,
+        debugShowCheckedModeBanner: false,
+        title: 'E-commerce App',
+        home: const MainScreen(),
+      ),
     );
   }
 }
