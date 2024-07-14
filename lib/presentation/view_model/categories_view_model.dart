@@ -8,8 +8,8 @@ import '../../data/models/failure.dart';
 import '../../data/models/responses/categories_responses/categories_response.dart';
 
 @injectable
-class GetAllCategoriesViewModel extends Cubit<BaseState> {
-  GetAllCategoriesViewModel(this.useCase) : super(BaseInitialState());
+class CategoriesViewModel extends Cubit<BaseState> {
+  CategoriesViewModel(this.useCase) : super(BaseInitialState());
   final GetAllCategoriesUseCase useCase;
 
   void getCategories() async {

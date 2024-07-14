@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:ecommerce_app/data/models/failure.dart';
+import 'package:ecommerce_app/data/models/responses/products_responses/products_response.dart';
 import 'package:ecommerce_app/domain/use_cases/cart_use_cases/get_logged_user_cart_use_case.dart';
 import 'package:ecommerce_app/domain/use_cases/cart_use_cases/remove_from_cart_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,12 +54,19 @@ class CartViewModel extends Cubit<CartState> {
     });
   }
 
-  Future<void> loading() async{
-    emit(CartLoading());
+  bool isInCart(ProductDM product) {
+    if (cartDM != null && cartDM!.products != null) {
+      var productsInCart = cartDM!.products!;
+      for (int i = 0; i < productsInCart.length; i++) {
+        if (product.id == productsInCart[i].product?.id) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
-  Future<void> hideLoading() async{
-    emit(CartSuccess());
-  }
+
+
 }
 
 abstract class CartState {}

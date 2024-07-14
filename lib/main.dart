@@ -8,6 +8,7 @@ import 'domain/di/di.dart';
 import 'presentation/screens/auth_screens/login_screen/login_screen.dart';
 import 'presentation/screens/auth_screens/register_screen/register_screen.dart';
 import 'presentation/screens/main_screen/main_screen.dart';
+import 'presentation/tabs/home_tab/home_tab_components/products/product_details.dart';
 import 'utils/app_themes.dart';
 
 void main() async {
@@ -32,7 +33,8 @@ class ECommerceApp extends StatelessWidget {
         routes: {
           RegisterScreen.routeName: (_) => const RegisterScreen(),
           LoginScreen.routeName: (_) => const LoginScreen(),
-          MainScreen.routeName: (_) => MainScreen(),
+          MainScreen.routeName: (_) => const MainScreen(),
+          ProductDetails.routeName: (_) => const ProductDetails(),
         },
         initialRoute: CacheData.getData(key: "token") == null
             ? LoginScreen.routeName
@@ -40,6 +42,7 @@ class ECommerceApp extends StatelessWidget {
         theme: AppThemes.lightTheme,
         debugShowCheckedModeBanner: false,
         title: 'E-commerce App',
+        home: const MainScreen(),
       ),
     );
   }

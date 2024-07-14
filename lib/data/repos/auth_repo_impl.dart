@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:ecommerce_app/data/data_utils/cache_helper.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
@@ -39,7 +40,9 @@ class AuthRepoImpl extends AuthRepo {
         return left(NetworkFailure("Check your Internet Connection !"));
       }
     }catch (e){
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
       return Left(Failure("Something went wrong !"));
     }
 

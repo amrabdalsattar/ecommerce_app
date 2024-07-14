@@ -1,8 +1,8 @@
 import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
-class FavouritesTab extends StatelessWidget {
-  const FavouritesTab({super.key});
+class WishlistTab extends StatelessWidget {
+  const WishlistTab({super.key});
 
   @override
   Widget build(BuildContext context) {

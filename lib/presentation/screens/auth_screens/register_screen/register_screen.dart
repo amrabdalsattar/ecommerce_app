@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../utils/app_colors.dart';
 import '../../../../utils/dialog_utils.dart';
-import '../../../shared_components/custom_auth_button.dart';
+import '../../../shared_components/buttons/custom_auth_button.dart';
 import '../../../shared_components/custom_text_field.dart';
 import '../../../shared_components/route_logo.dart';
 import '../../../view_model/auth_view_models/register_view_model.dart';

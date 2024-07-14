@@ -13,7 +13,6 @@ class CategoriesGridView extends StatelessWidget {
     return GridView.builder(
       itemCount: categories.length,
       physics: const BouncingScrollPhysics(),
-
       scrollDirection: Axis.horizontal,
       itemBuilder: (_, int index) => CategoryWidget(categoryDM: categories[index]),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

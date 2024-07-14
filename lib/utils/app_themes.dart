@@ -29,7 +29,7 @@ abstract class AppThemes {
           fontWeight: FontWeight.normal,
           color: AppColors.primary),
       bodyLarge: TextStyle(
-          fontSize: 16.sp,
+          fontSize: 15.sp,
           fontWeight: FontWeight.bold,
           color: AppColors.primary),
       bodyMedium: TextStyle(

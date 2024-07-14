@@ -12,4 +12,5 @@ abstract class AppColors{
   static const Color grey = Colors.grey;
   static const Color liteGrey = Color.fromARGB(255, 237, 237, 237);
   static const Color liteBlue = Color.fromARGB(255, 178, 196, 216);
+  static const Color fadeBlue = Color.fromARGB(255, 105, 101, 148);
 }

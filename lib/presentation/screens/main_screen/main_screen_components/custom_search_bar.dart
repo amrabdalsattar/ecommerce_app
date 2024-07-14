@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/presentation/shared_components/icons/search_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -21,11 +22,7 @@ class CustomSearchBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Icon(
-            Icons.search,
-            color: AppColors.primary,
-            size: 28,
-          ),
+          const SearchIcon(size: 22,),
           Text(
             "What do you search for?",
             style: Theme.of(context).textTheme.bodySmall,

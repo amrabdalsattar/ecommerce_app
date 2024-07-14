@@ -26,7 +26,7 @@ class CustomBottomNavBar extends StatelessWidget {
             viewModel.buildBottomNavIcon(
                 AppAssets.categoriesIcon, viewModel.currentIndex == 1),
             viewModel.buildBottomNavIcon(
-                AppAssets.favouritesIcon, viewModel.currentIndex == 2),
+                AppAssets.wishlistIcon, viewModel.currentIndex == 2),
             viewModel.buildBottomNavIcon(
                 AppAssets.profileIcon, viewModel.currentIndex == 3),
           ]),

@@ -7,15 +7,28 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class GetAllProductsViewModel extends Cubit<BaseState> {
+class ProductsViewModel extends Cubit<BaseState> {
   final GetAllProductsUseCase useCase;
 
-  GetAllProductsViewModel(this.useCase) : super(BaseInitialState());
+  ProductsViewModel(this.useCase) : super(BaseInitialState());
 
   void getProducts() async {
     emit(BaseLoadingState());
     Either<Failure, List<ProductDM>> response = await useCase.execute();
-    response.fold((error) => emit(BaseErrorState(error.errorMessage)),
-        (products) => emit(BaseSuccessState<List<ProductDM>>(data: products)));
+    response.fold(
+      (error) => emit(BaseErrorState(error.errorMessage)),
+      (products) {
+        products.sort((a, b) => b.sold!.compareTo(a.sold!));
+        emit(BaseSuccessState<List<ProductDM>>(data: products));
+      },
+    );
+  }
+
+  Future<void> loading() async {
+    emit(BaseLoadingState());
+  }
+
+  Future<void> hideLoading() async {
+    emit(BaseSuccessState());
   }
 }

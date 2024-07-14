@@ -4,16 +4,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../tabs/categories_tab/categories_tab.dart';
-import '../../tabs/favourites_tab/favourites_tab.dart';
 import '../../tabs/home_tab/home_tab.dart';
 import '../../tabs/profile_tab/profile_tab.dart';
+import '../../tabs/wishlist_tab/wishlist_tab.dart';
 
 class MainScreenViewModel extends Cubit{
   MainScreenViewModel() : super(MainInitialState());
   List<Widget> tabs = const [
     HomeTab(),
     CategoriesTab(),
-    FavouritesTab(),
+    WishlistTab(),
     ProfileTab()
   ];
   int currentIndex = 0;
