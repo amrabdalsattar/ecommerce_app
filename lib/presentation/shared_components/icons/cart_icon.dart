@@ -1,3 +1,5 @@
+import 'package:ecommerce_app/presentation/screens/main_screen/main_screen_components/cart/cart_screen.dart';
+import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -11,6 +13,12 @@ class CartIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         margin: EdgeInsets.only(right: 20.w),
-        child: Image.asset(AppAssets.cartIcon, height: size.h,));
+        child: InkWell(
+            onTap: (){
+              Navigator.pushNamed(context, CartScreen.routeName);
+            },
+            splashColor: AppColors.liteGrey,
+            borderRadius: BorderRadius.circular(10),
+            child: Image.asset(AppAssets.cartIcon, height: size.h,)));
   }
 }

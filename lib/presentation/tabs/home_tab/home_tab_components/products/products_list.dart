@@ -23,7 +23,7 @@ class ProductsList extends StatelessWidget {
               ProductDM product = products[index];
               return ProductWidget(
                 product: products[index],
-                isInCart: cartViewModel.isInCart(product),
+                isInCart: cartViewModel.isInCart(product) != null,
                 cartViewModel: cartViewModel,
                 heroTag: product.id!,
               );

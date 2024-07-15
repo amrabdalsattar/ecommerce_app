@@ -52,7 +52,7 @@ class CartProduct {
     price = json['price'];
   }
 
-  int? count;
+  num? count;
   String? id;
   ProductDM? product;
   int? price;

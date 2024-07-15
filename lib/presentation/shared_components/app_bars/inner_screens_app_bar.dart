@@ -4,23 +4,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InnerScreensAppBar extends StatelessWidget {
-  const InnerScreensAppBar({super.key});
+  final bool isForCartScreen;
+  final String title;
+
+  const InnerScreensAppBar(
+      {super.key, this.isForCartScreen = false, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(
-        "Product Details",
+        title,
         style: Theme.of(context)
             .textTheme
             .bodyMedium!
-            .copyWith(fontWeight: FontWeight.bold),
+            .copyWith(fontWeight: FontWeight.bold, fontSize: 16.sp),
       ),
       centerTitle: true,
       actions: [
-        const SearchIcon(size: 20,),
-        SizedBox(width: 20.w,),
-        const CartIcon(size: 20),
+        const SearchIcon(
+          size: 20,
+        ),
+        SizedBox(
+          width: 20.w,
+        ),
+        isForCartScreen ? Container() : const CartIcon(size: 20),
       ],
     );
   }
