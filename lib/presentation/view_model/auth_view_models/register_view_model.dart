@@ -33,6 +33,6 @@ class RegisterViewModel extends Cubit<BaseState> {
             rePassword: rePassword.text));
 
     response.fold((error) => emit(BaseErrorState(error.errorMessage)),
-            (success) => emit(BaseSuccessState()));
+        (success) => emit(BaseSuccessState()));
   }
 }

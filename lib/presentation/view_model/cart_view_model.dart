@@ -65,8 +65,6 @@ class CartViewModel extends Cubit<CartState> {
     }
     return null;
   }
-
-
 }
 
 abstract class CartState {}

@@ -7,7 +7,9 @@ class CategoriesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: AppColors.grey,
-    child: Text(CacheData.getData(key: "name")),);
+    return Container(
+      color: AppColors.grey,
+      child: Text(CacheData.getData(key: "name")),
+    );
   }
 }

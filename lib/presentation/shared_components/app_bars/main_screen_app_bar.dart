@@ -20,13 +20,8 @@ class MainScreenAppBar extends StatelessWidget {
         child: Container(
           margin: EdgeInsets.only(top: 2.8.h),
           child: const Row(
-            children: [
-              CustomSearchBar(),
-              Spacer(),
-              CartIcon(size: 30)
-            ],
+            children: [CustomSearchBar(), Spacer(), CartIcon(size: 30)],
           ),
-
         ),
       ),
     );

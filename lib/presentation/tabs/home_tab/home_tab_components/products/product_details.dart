@@ -24,12 +24,14 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProductDetailsViewModel viewModel = getIt<ProductDetailsViewModel>();
-    CartViewModel cartViewModel = BlocProvider.of(context);
+    var cartViewModel = context.read<CartViewModel>();
     var product = ModalRoute.of(context)!.settings.arguments as ProductDM;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.h),
-        child: const InnerScreensAppBar(title: "Product Details",),
+        child: const InnerScreensAppBar(
+          title: "Product Details",
+        ),
       ),
       body: BlocBuilder<ProductDetailsViewModel, dynamic>(
         bloc: viewModel,
@@ -170,24 +172,37 @@ class ProductDetails extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      child: cartViewModel.isInCart(product) != null
-                          ? SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              child: IncrementAndDecrementButton(
-                                viewModel: viewModel,
-                                cartViewModel: cartViewModel,
-                                product: product,
+                        child: cartViewModel.isInCart(product) != null
+                            ? SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.06,
+                                child: IncrementAndDecrementButton(
+                                  viewModel: viewModel,
+                                  cartViewModel: cartViewModel,
+                                  product: product,
+                                ))
+                            : MethodsButton(
+                                onPressed: () async {
+                                  showLoading(context);
+                                  await cartViewModel.addToCart(product.id!);
+                                  Navigator.pop(context);
+                                },
+                                body: const Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Icon(
+                                      Icons.add_shopping_cart,
+                                      color: AppColors.white,
+                                    ),
+                                    Text(
+                                      "Add to cart",
+                                      style: TextStyle(color: AppColors.white),
+                                    )
+                                  ],
+                                ),
                               ))
-                          : MethodsButton(
-                              onPressed: () async {
-                                showLoading(context);
-                                await cartViewModel.addToCart(product.id!);
-                                Navigator.pop(context);
-                              },
-                              title: "Add to cart",
-                              icon: Icons.add_shopping_cart),
-                    )
                   ],
                 ),
               )

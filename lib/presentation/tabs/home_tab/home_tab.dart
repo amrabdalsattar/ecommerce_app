@@ -42,13 +42,15 @@ class _HomeTabState extends State<HomeTab> {
         child: ListView(
           children: [
             BlocBuilder<ProductDetailsViewModel, dynamic>(
-              bloc: productDetailsViewModel,
+                bloc: productDetailsViewModel,
                 builder: (context, state) => Container(
-                  margin: const EdgeInsets.only(right: 10),
-                  child: SliderWidget(
-                      images: AppAssets.slides,
-                      viewModel: productDetailsViewModel, isLocalImages: true,),
-                )),
+                      margin: const EdgeInsets.only(right: 10),
+                      child: SliderWidget(
+                        images: AppAssets.slides,
+                        viewModel: productDetailsViewModel,
+                        isLocalImages: true,
+                      ),
+                    )),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

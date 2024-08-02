@@ -22,7 +22,9 @@ class CustomSearchBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const SearchIcon(size: 22,),
+          const SearchIcon(
+            size: 22,
+          ),
           Text(
             "What do you search for?",
             style: Theme.of(context).textTheme.bodySmall,

@@ -39,7 +39,7 @@ class CartDM {
   String? createdAt;
   String? updatedAt;
   int? v;
-  int? totalCartPrice;
+  num? totalCartPrice;
 }
 
 class CartProduct {

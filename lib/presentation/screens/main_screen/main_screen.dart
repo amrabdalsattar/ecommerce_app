@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../view_model/cart_view_model.dart';
 
-
 class MainScreen extends StatefulWidget {
   static const String routeName = "mainScreen";
 
@@ -22,8 +21,8 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    CartViewModel viewModel = BlocProvider.of(context);
-    viewModel.getCartList();
+    var cartViewModel = context.read<CartViewModel>();
+    cartViewModel.getCartList();
   }
 
   @override
@@ -32,19 +31,16 @@ class _MainScreenState extends State<MainScreen> {
       create: (_) => viewModel,
       child: BlocBuilder<MainScreenViewModel, dynamic>(
         bloc: viewModel,
-        builder: (context, _) =>
-            Scaffold(
-              body: NestedScrollView(
-                headerSliverBuilder: (_, innerBoxIsScrolled) =>
-                [
-                  const MainScreenAppBar()
-                ],
-                body: viewModel.tabs[viewModel.currentIndex],
-              ),
-              bottomNavigationBar: CustomBottomNavBar(
-                viewModel: viewModel,
-              ),
-            ),
+        builder: (context, _) => Scaffold(
+          body: NestedScrollView(
+            headerSliverBuilder: (_, innerBoxIsScrolled) =>
+                [const MainScreenAppBar()],
+            body: viewModel.tabs[viewModel.currentIndex],
+          ),
+          bottomNavigationBar: CustomBottomNavBar(
+            viewModel: viewModel,
+          ),
+        ),
       ),
     );
   }

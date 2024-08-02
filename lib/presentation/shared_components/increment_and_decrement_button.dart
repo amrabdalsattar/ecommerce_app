@@ -44,7 +44,7 @@ class IncrementAndDecrementButton extends StatelessWidget {
             ),
           ),
           Text(
-            "${cartViewModel.isInCart(product)?.count??0}",
+            "${cartViewModel.isInCart(product)?.count ?? 0}",
             style: const TextStyle(color: AppColors.white),
           ),
           GestureDetector(

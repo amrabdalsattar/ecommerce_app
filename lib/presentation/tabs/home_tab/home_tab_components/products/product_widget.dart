@@ -25,7 +25,8 @@ class ProductWidget extends StatefulWidget {
       {super.key,
       required this.product,
       required this.isInCart,
-      required this.cartViewModel, required this.heroTag});
+      required this.cartViewModel,
+      required this.heroTag});
 
   @override
   State<ProductWidget> createState() => _ProductWidgetState();
@@ -35,12 +36,12 @@ class _ProductWidgetState extends State<ProductWidget> {
   bool isLoadingToCart = false;
   ProductsViewModel viewModel = getIt();
 
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.pushNamed(context, ProductDetails.routeName,arguments: widget.product);
+      onTap: () {
+        Navigator.pushNamed(context, ProductDetails.routeName,
+            arguments: widget.product);
       },
       child: Container(
         margin: EdgeInsets.only(right: 14.w),
@@ -55,7 +56,8 @@ class _ProductWidgetState extends State<ProductWidget> {
               flex: 7,
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20)),
                 child: Stack(
                   alignment: Alignment.topRight,
                   children: [
@@ -107,7 +109,9 @@ class _ProductWidgetState extends State<ProductWidget> {
                           children: [
                             Text(
                               "Review (${widget.product.ratingsAverage ?? 0})",
-                              style: Theme.of(context).textTheme.bodySmall!
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
                                   .copyWith(fontSize: 10.5.sp),
                             ),
                             SizedBox(
@@ -123,7 +127,9 @@ class _ProductWidgetState extends State<ProductWidget> {
                           children: [
                             Text(
                               "EGP ${numbersFormat(widget.product.price ?? 0)}",
-                              style: Theme.of(context).textTheme.bodySmall!
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
                                   .copyWith(fontSize: 11.sp),
                             ),
                             const Spacer(),

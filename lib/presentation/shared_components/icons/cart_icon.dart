@@ -7,6 +7,7 @@ import '../../../utils/app_assets.dart';
 
 class CartIcon extends StatelessWidget {
   final double size;
+
   const CartIcon({super.key, required this.size});
 
   @override
@@ -14,11 +15,14 @@ class CartIcon extends StatelessWidget {
     return Container(
         margin: EdgeInsets.only(right: 20.w),
         child: InkWell(
-            onTap: (){
+            onTap: () {
               Navigator.pushNamed(context, CartScreen.routeName);
             },
             splashColor: AppColors.liteGrey,
             borderRadius: BorderRadius.circular(10),
-            child: Image.asset(AppAssets.cartIcon, height: size.h,)));
+            child: Image.asset(
+              AppAssets.cartIcon,
+              height: size.h,
+            )));
   }
 }
