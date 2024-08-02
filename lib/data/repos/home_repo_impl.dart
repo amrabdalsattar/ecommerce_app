@@ -26,11 +26,22 @@ class HomeRepoImpl extends HomeRepo {
   }
 
   @override
-  Future<Either<Failure, List<ProductDM>>> getProducts() async{
+  Future<Either<Failure, List<ProductDM>>> getProducts() async {
     bool isConnectedToInternet =
         await InternetConnectionChecker().hasConnection;
     if (isConnectedToInternet) {
       return ds.getProducts();
+    } else {
+      return Left(Failure("Check your Internet Connection !"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ProductDM>>> getProductsByCategory(String id) async {
+    bool isConnectedToInternet =
+        await InternetConnectionChecker().hasConnection;
+    if (isConnectedToInternet) {
+      return ds.getProductsByCategory(id);
     } else {
       return Left(Failure("Check your Internet Connection !"));
     }

@@ -15,6 +15,7 @@ class CartViewModel extends Cubit<CartState> {
   final GetLoggedUserCartUseCase getLoggedUserCartUseCase;
   final RemoveFromCartUseCase removeFromCartUseCase;
   bool isLoadingToCart = false;
+  List<CartProduct> productsInCart = [];
   CartDM? cartDM;
 
   CartViewModel(this.addToCartUseCase, this.getLoggedUserCartUseCase,
@@ -67,7 +68,7 @@ class CartViewModel extends Cubit<CartState> {
   }
 }
 
-abstract class CartState {}
+sealed class CartState {}
 
 class CartInitial extends CartState {}
 
