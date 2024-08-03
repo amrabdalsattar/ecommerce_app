@@ -17,7 +17,7 @@ class CartIcon extends StatelessWidget {
         margin: EdgeInsets.only(right: 20.w),
         child: InkWell(
             onTap: () {
-              NavigationManager().navigationWithSlide(context, const CartScreen());
+              NavigationManager.navigationWithSlide(context, const CartScreen());
             },
             splashColor: AppColors.liteGrey,
             borderRadius: BorderRadius.circular(10),

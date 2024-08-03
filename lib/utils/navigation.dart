@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class NavigationManager {
-  void navigationWithSlide(BuildContext context, Widget widget) {
+  static void navigationWithSlide(BuildContext context, Widget widget) {
     Navigator.of(context).push(PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
         return widget;

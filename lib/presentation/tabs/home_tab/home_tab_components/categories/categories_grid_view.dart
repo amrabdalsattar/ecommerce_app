@@ -7,7 +7,8 @@ import 'category_widget.dart';
 class CategoriesGridView extends StatelessWidget {
   final List<CategoryDM> categories;
 
-  const CategoriesGridView({super.key, required this.categories});
+  const CategoriesGridView(
+      {super.key, required this.categories});
 
   @override
   Widget build(BuildContext context) {

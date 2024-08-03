@@ -44,7 +44,7 @@ class _ProductWidgetState extends State<ProductWidget> {
             arguments: widget.product);
       },
       child: Container(
-        margin: EdgeInsets.only(right: 14.w),
+        margin: EdgeInsets.symmetric(horizontal: 7.w),
         width: MediaQuery.sizeOf(context).width * 0.44,
         decoration: BoxDecoration(
             border: Border.all(color: AppColors.liteBlue, width: 1.5),

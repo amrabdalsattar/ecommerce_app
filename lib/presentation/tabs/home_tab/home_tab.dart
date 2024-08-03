@@ -76,7 +76,9 @@ class _HomeTabState extends State<HomeTab> {
                       return Text(state.errorMessage);
 
                     case BaseSuccessState():
-                      return CategoriesGridView(categories: state.data);
+                      return CategoriesGridView(
+                        categories: state.data,
+                      );
 
                     default:
                       return const Text("Something went Wrong");
