@@ -10,7 +10,7 @@ import '../../tabs/wishlist_tab/wishlist_tab.dart';
 
 class MainScreenViewModel extends Cubit {
   MainScreenViewModel() : super(MainInitialState());
-  List<Widget> tabs = const [
+  List<Widget> tabs =  [
     HomeTab(),
     CategoriesTab(),
     WishlistTab(),

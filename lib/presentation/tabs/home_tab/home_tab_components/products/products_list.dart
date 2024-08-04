@@ -16,12 +16,12 @@ class ProductsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CartViewModel cartViewModel = BlocProvider.of(context, listen: false);
-    return Padding(
-      padding: EdgeInsets.only(top: 15.h, left: 10.w, right: 10.w, bottom: 6.h),
-      child: BlocBuilder<CartViewModel, CartState>(
-        builder: (context, state) {
-          return isCategoryProducts
-              ? GridView.builder(
+    return BlocBuilder<CartViewModel, CartState>(
+      builder: (context, state) {
+        return isCategoryProducts
+            ? Padding(
+            padding: EdgeInsets.only(top: 15.h, left: 10.w, right: 10.w, bottom: 6.h),
+              child: GridView.builder(
                   itemCount: products.length,
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.vertical,
@@ -38,22 +38,22 @@ class ProductsList extends StatelessWidget {
                       crossAxisCount: 2,
                       childAspectRatio: 0.775,
                       mainAxisSpacing: 12.h,
-                      crossAxisSpacing: 12.w))
-              : ListView.builder(
-                  itemCount: products.length,
-                  physics: const BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (_, index) {
-                    ProductDM product = products[index];
-                    return ProductWidget(
-                      product: products[index],
-                      isInCart: cartViewModel.isInCart(product) != null,
-                      cartViewModel: cartViewModel,
-                      heroTag: product.id!,
-                    );
-                  });
-        },
-      ),
+                      crossAxisSpacing: 12.w)),
+            )
+            : ListView.builder(
+                itemCount: products.length,
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: isCategoryProducts? Axis.vertical : Axis.horizontal,
+                itemBuilder: (_, index) {
+                  ProductDM product = products[index];
+                  return ProductWidget(
+                    product: products[index],
+                    isInCart: cartViewModel.isInCart(product) != null,
+                    cartViewModel: cartViewModel,
+                    heroTag: product.id!,
+                  );
+                });
+      },
     );
   }
 }

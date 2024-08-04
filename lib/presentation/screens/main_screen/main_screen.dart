@@ -31,16 +31,18 @@ class _MainScreenState extends State<MainScreen> {
       create: (_) => viewModel,
       child: BlocBuilder<MainScreenViewModel, dynamic>(
         bloc: viewModel,
-        builder: (context, _) => Scaffold(
-          body: NestedScrollView(
-            headerSliverBuilder: (_, innerBoxIsScrolled) =>
+        builder: (context, _) =>
+            Scaffold(
+              body: NestedScrollView(
+                floatHeaderSlivers: true,
+                headerSliverBuilder: (_, innerBoxIsScrolled) =>
                 [const MainScreenAppBar()],
-            body: viewModel.tabs[viewModel.currentIndex],
-          ),
-          bottomNavigationBar: CustomBottomNavBar(
-            viewModel: viewModel,
-          ),
-        ),
+                body: viewModel.tabs[viewModel.currentIndex],
+              ),
+              bottomNavigationBar: CustomBottomNavBar(
+                viewModel: viewModel,
+              ),
+            ),
       ),
     );
   }

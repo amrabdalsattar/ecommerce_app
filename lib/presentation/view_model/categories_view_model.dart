@@ -10,7 +10,7 @@ import '../../data/models/responses/categories_responses/categories_response.dar
 import '../../data/models/responses/products_responses/products_response.dart';
 
 @injectable
-class CategoriesViewModel extends Cubit {
+class CategoriesViewModel extends Cubit<BaseState> {
   CategoriesViewModel(
       this.getAllCategoriesUseCase, this.getProductsByCategoryUseCase)
       : super(BaseInitialState());
