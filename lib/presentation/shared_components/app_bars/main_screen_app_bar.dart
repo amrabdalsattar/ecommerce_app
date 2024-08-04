@@ -10,23 +10,24 @@ class MainScreenAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-      pinned: true,
-      floating: true,
-      snap: true,
-      title: Image.asset(AppAssets.blueLogo),
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(50),
-        child: Container(
-          margin: EdgeInsets.only(top: 2.8.h),
-          child: const Row(
-            children: [
-              CustomSearchBar(),
-              Spacer(),
-              CartIcon(size: 30)
-            ],
+    return SliverOverlapAbsorber(
+      handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+      sliver: SliverSafeArea(
+        top: false,
+        sliver: SliverAppBar(
+          pinned: true,
+          floating: true,
+          snap: true,
+          title: Image.asset(AppAssets.blueLogo),
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(42.9.h),
+            child: Container(
+              margin: EdgeInsets.only(top: 2.8.h),
+              child: const Row(
+                children: [CustomSearchBar(), Spacer(), CartIcon(size: 30)],
+              ),
+            ),
           ),
-
         ),
       ),
     );

@@ -6,6 +6,8 @@ class WishlistTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: AppColors.primary,);
+    return Container(
+      color: AppColors.primary,
+    );
   }
 }

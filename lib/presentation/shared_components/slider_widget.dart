@@ -24,12 +24,12 @@ class SliderWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           border: Border.all(color: AppColors.liteBlue),
-          borderRadius: BorderRadius.circular(16)),
+          borderRadius: BorderRadius.circular(20)),
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(19),
             child: CarouselSlider(
                 items: images
                     .map((url) => isLocalImages

@@ -8,9 +8,9 @@ import '../../tabs/home_tab/home_tab.dart';
 import '../../tabs/profile_tab/profile_tab.dart';
 import '../../tabs/wishlist_tab/wishlist_tab.dart';
 
-class MainScreenViewModel extends Cubit{
+class MainScreenViewModel extends Cubit {
   MainScreenViewModel() : super(MainInitialState());
-  List<Widget> tabs = const [
+  List<Widget> tabs =  [
     HomeTab(),
     CategoriesTab(),
     WishlistTab(),
@@ -18,25 +18,30 @@ class MainScreenViewModel extends Cubit{
   ];
   int currentIndex = 0;
 
-  set toggleCurrentTab(int index){
+  set toggleCurrentTab(int index) {
     currentIndex = index;
     emit(index);
   }
 
-  buildBottomNavIcon(String asset, bool selected){
+  buildBottomNavIcon(String asset, bool selected) {
     return BottomNavigationBarItem(
-        icon: selected ? CircleAvatar(
-          radius: 18.sp,
-          backgroundColor: AppColors.white,
-          child: ImageIcon(
-            AssetImage(asset),
-            size: 18.sp,
-            color: AppColors.primary,
-          ),
-        )
-            : ImageIcon(AssetImage(asset), size: 18.sp, color: AppColors.white,), label: ""
-    );
+        icon: selected
+            ? CircleAvatar(
+                radius: 18.sp,
+                backgroundColor: AppColors.white,
+                child: ImageIcon(
+                  AssetImage(asset),
+                  size: 18.sp,
+                  color: AppColors.primary,
+                ),
+              )
+            : ImageIcon(
+                AssetImage(asset),
+                size: 18.sp,
+                color: AppColors.white,
+              ),
+        label: "");
   }
-
 }
-class MainInitialState{}
+
+class MainInitialState {}

@@ -8,6 +8,7 @@ abstract class AppAssets{
   static const String blueLogo = "assets/images/blueLogo.png";
   static const String cartIcon = "assets/images/cart.png";
   static const String searchIcon = "assets/images/searchIcon.png";
+  static const String emptyCartImage = "assets/images/emptyCart.png";
   static const List<String> slides = [
     "assets/images/slide1.png",
     "assets/images/slide2.png",

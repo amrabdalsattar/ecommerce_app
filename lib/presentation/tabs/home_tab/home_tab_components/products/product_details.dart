@@ -3,8 +3,10 @@ import 'package:ecommerce_app/presentation/shared_components/app_bars/inner_scre
 import 'package:ecommerce_app/presentation/shared_components/buttons/methods_button.dart';
 import 'package:ecommerce_app/presentation/shared_components/increment_and_decrement_button.dart';
 import 'package:ecommerce_app/presentation/shared_components/slider_widget.dart';
+import 'package:ecommerce_app/presentation/view_model/cart_view_model.dart';
 import 'package:ecommerce_app/presentation/view_model/product_view_models/product_details_view_model.dart';
 import 'package:ecommerce_app/utils/app_colors.dart';
+import 'package:ecommerce_app/utils/dialog_utils.dart';
 import 'package:ecommerce_app/utils/ui_logic_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,11 +24,14 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProductDetailsViewModel viewModel = getIt<ProductDetailsViewModel>();
-    var args = ModalRoute.of(context)!.settings.arguments as ProductDM;
+    var cartViewModel = context.read<CartViewModel>();
+    var product = ModalRoute.of(context)!.settings.arguments as ProductDM;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.h),
-        child: const InnerScreensAppBar(),
+        child: const InnerScreensAppBar(
+          title: "Product Details",
+        ),
       ),
       body: BlocBuilder<ProductDetailsViewModel, dynamic>(
         bloc: viewModel,
@@ -41,7 +46,7 @@ class ProductDetails extends StatelessWidget {
                 child: ListView(
                   children: [
                     SliderWidget(
-                      images: args.images!,
+                      images: product.images!,
                       viewModel: viewModel,
                     ),
                     SizedBox(
@@ -53,7 +58,7 @@ class ProductDetails extends StatelessWidget {
                         Expanded(
                             flex: 7,
                             child: Text(
-                              args.title!,
+                              product.title!,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!
@@ -62,7 +67,7 @@ class ProductDetails extends StatelessWidget {
                         Expanded(
                             flex: 3,
                             child: Text(
-                              "EGP ${numbersFormat(args.price!)}",
+                              "EGP ${numbersFormat(product.price!)}",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!
@@ -84,7 +89,7 @@ class ProductDetails extends StatelessWidget {
                                 border: Border.all(color: AppColors.liteBlue),
                                 borderRadius: BorderRadius.circular(20)),
                             child: Text(
-                              "${numbersFormat(args.sold!)} Sold",
+                              "${numbersFormat(product.sold!)} Sold",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!
@@ -98,10 +103,16 @@ class ProductDetails extends StatelessWidget {
                               width: 5.w,
                             ),
                             Text(
-                                "${args.ratingsAverage!} (${args.ratingsQuantity})"),
+                                "${product.ratingsAverage!} (${product.ratingsQuantity})"),
                           ],
                         ),
-                        IncrementAndDecrementButton(viewModel: viewModel)
+                        Visibility(
+                            visible: cartViewModel.isInCart(product) == null,
+                            child: IncrementAndDecrementButton(
+                              viewModel: viewModel,
+                              cartViewModel: cartViewModel,
+                              product: product,
+                            ))
                       ],
                     ),
                     SizedBox(
@@ -114,7 +125,7 @@ class ProductDetails extends StatelessWidget {
                     SizedBox(
                       height: 8.h,
                     ),
-                    ReadMoreText("${args.description!}  ",
+                    ReadMoreText("${product.description!}  ",
                         trimMode: TrimMode.Line,
                         colorClickableText: AppColors.grey,
                         trimCollapsedText: "Show more",
@@ -136,31 +147,62 @@ class ProductDetails extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Total price",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(
-                                  color: AppColors.fadeBlue,
-                                  fontWeight: FontWeight.w500),
-                        ),
-                        Text(
-                          "EGP ${numbersFormat(args.price! * viewModel.numberOfItems)}",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(fontWeight: FontWeight.bold),
-                        )
-                      ],
+                    BlocBuilder(
+                      bloc: cartViewModel,
+                      builder: (context, state) => Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Total price",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                    color: AppColors.fadeBlue,
+                                    fontWeight: FontWeight.w500),
+                          ),
+                          Text(
+                            "EGP ${numbersFormat(product.price! * (cartViewModel.isInCart(product)?.count ?? 0))}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
                     ),
-                    MethodsButton(
-                        onPressed: () {},
-                        title: "Add to cart",
-                        icon: Icons.add_shopping_cart)
+                    Container(
+                        child: cartViewModel.isInCart(product) != null
+                            ? SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.06,
+                                child: IncrementAndDecrementButton(
+                                  viewModel: viewModel,
+                                  cartViewModel: cartViewModel,
+                                  product: product,
+                                ))
+                            : MethodsButton(
+                                onPressed: () async {
+                                  showLoading(context);
+                                  await cartViewModel.addToCart(product.id!);
+                                  Navigator.pop(context);
+                                },
+                                body: const Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Icon(
+                                      Icons.add_shopping_cart,
+                                      color: AppColors.white,
+                                    ),
+                                    Text(
+                                      "Add to cart",
+                                      style: TextStyle(color: AppColors.white),
+                                    )
+                                  ],
+                                ),
+                              ))
                   ],
                 ),
               )

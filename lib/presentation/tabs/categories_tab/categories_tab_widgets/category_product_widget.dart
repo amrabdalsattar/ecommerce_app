@@ -1,27 +1,27 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ecommerce_app/data/models/responses/products_responses/products_response.dart';
-import 'package:ecommerce_app/domain/di/di.dart';
-import 'package:ecommerce_app/presentation/shared_components/loading_widget.dart';
-import 'package:ecommerce_app/presentation/tabs/home_tab/home_tab_components/products/product_details.dart';
-import 'package:ecommerce_app/presentation/view_model/cart_view_model.dart';
-import 'package:ecommerce_app/presentation/view_model/product_view_models/products_view_model.dart';
-import 'package:ecommerce_app/presentation/view_model/states/base_states.dart';
-import 'package:ecommerce_app/utils/app_colors.dart';
-import 'package:ecommerce_app/utils/dialog_utils.dart';
-import 'package:ecommerce_app/utils/ui_logic_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../utils/app_assets.dart';
+import '../../../../data/models/responses/products_responses/products_response.dart';
+import '../../../../domain/di/di.dart';
+import '../../../../utils/app_assets.dart';
+import '../../../../utils/app_colors.dart';
+import '../../../../utils/dialog_utils.dart';
+import '../../../../utils/ui_logic_functions.dart';
+import '../../../shared_components/loading_widget.dart';
+import '../../../view_model/cart_view_model.dart';
+import '../../../view_model/product_view_models/products_view_model.dart';
+import '../../../view_model/states/base_states.dart';
+import '../../home_tab/home_tab_components/products/product_details.dart';
 
-class ProductWidget extends StatefulWidget {
+class CategoryProductWidget extends StatefulWidget {
   final ProductDM product;
   final bool isInCart;
   final CartViewModel cartViewModel;
   final String heroTag;
 
-  const ProductWidget(
+  const CategoryProductWidget(
       {super.key,
       required this.product,
       required this.isInCart,
@@ -29,13 +29,12 @@ class ProductWidget extends StatefulWidget {
       required this.heroTag});
 
   @override
-  State<ProductWidget> createState() => _ProductWidgetState();
+  State<CategoryProductWidget> createState() => _CategoryProductWidgetState();
 }
 
-class _ProductWidgetState extends State<ProductWidget> {
+class _CategoryProductWidgetState extends State<CategoryProductWidget> {
   bool isLoadingToCart = false;
   ProductsViewModel viewModel = getIt();
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -44,7 +43,6 @@ class _ProductWidgetState extends State<ProductWidget> {
             arguments: widget.product);
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 5.w),
         width: MediaQuery.sizeOf(context).width * 0.44,
         decoration: BoxDecoration(
             border: Border.all(color: AppColors.liteBlue, width: 1.5),
@@ -53,7 +51,7 @@ class _ProductWidgetState extends State<ProductWidget> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
-              flex: 7,
+              flex: 101,
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(20),
@@ -86,7 +84,7 @@ class _ProductWidgetState extends State<ProductWidget> {
               ),
             ),
             Expanded(
-              flex: 6,
+              flex: 100,
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Column(
@@ -95,7 +93,9 @@ class _ProductWidgetState extends State<ProductWidget> {
                   children: [
                     Text(
                       widget.product.title ?? "",
-                      style: Theme.of(context).textTheme.bodySmall,
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        fontSize: 10.sp
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -112,16 +112,13 @@ class _ProductWidgetState extends State<ProductWidget> {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall!
-                                  .copyWith(fontSize: 10.5.sp),
+                                  .copyWith(fontSize: 8.sp),
                             ),
                             SizedBox(
-                              width: 10.w,
+                              width: 4.w,
                             ),
-                            Image.asset(AppAssets.star)
+                            Image.asset(AppAssets.star, width: 10,height: 10,)
                           ],
-                        ),
-                        SizedBox(
-                          height: 2.h,
                         ),
                         Row(
                           children: [
@@ -130,12 +127,12 @@ class _ProductWidgetState extends State<ProductWidget> {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall!
-                                  .copyWith(fontSize: 11.sp),
+                                  .copyWith(fontSize: 8.sp),
                             ),
                             const Spacer(),
                             SizedBox(
-                              width: 34.w,
-                              height: 31.h,
+                              width: 23.w,
+                              height: 21.h,
                               child: BlocListener<ProductsViewModel, BaseState>(
                                 listener: (context, state) {
                                   if (state is BaseLoadingState) {
@@ -148,6 +145,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                                 },
                                 bloc: viewModel,
                                 child: FloatingActionButton(
+                                  mini: true,
                                   heroTag: widget.heroTag,
                                   shape: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(30),
@@ -165,7 +163,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                                       viewModel.hideLoading();
                                       showToast(
                                           message:
-                                              "${widget.product.title} has been successfully added to your cart!",
+                                          "${widget.product.title} has been successfully added to your cart!",
                                           textColor: AppColors.primary,
                                           color: AppColors.fadedWhite);
                                     }
@@ -173,16 +171,16 @@ class _ProductWidgetState extends State<ProductWidget> {
                                   backgroundColor: AppColors.primary,
                                   child: isLoadingToCart
                                       ? Container(
-                                          padding: const EdgeInsets.all(10),
-                                          child: const LoadingWidget(
-                                            color: AppColors.white,
-                                          ))
+                                      padding: const EdgeInsets.all(6),
+                                      child: const LoadingWidget(
+                                        color: AppColors.white,
+                                      ))
                                       : Icon(
-                                          widget.isInCart
-                                              ? Icons.remove
-                                              : Icons.add,
-                                          color: AppColors.white,
-                                        ),
+                                    widget.isInCart
+                                        ? Icons.remove
+                                        : Icons.add,
+                                    color: AppColors.white,
+                                  ),
                                 ),
                               ),
                             ),

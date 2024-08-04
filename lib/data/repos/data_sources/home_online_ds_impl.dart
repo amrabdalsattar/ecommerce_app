@@ -23,13 +23,28 @@ class HomeOnlineDSImpl extends HomeOnlineDs {
         categoriesResponse.categories!.isNotEmpty) {
       return Right(categoriesResponse.categories!);
     } else {
-      return Left(Failure(categoriesResponse.message?? "Something went Wrong!"));
+      return Left(
+          Failure(categoriesResponse.message ?? "Something went Wrong!"));
     }
   }
 
   @override
   Future<Either<Failure, List<ProductDM>>> getProducts() async {
     final response = await api.get(ApiConstants.getAllProductsEndPoint);
+    ProductsResponse productsResponse = ProductsResponse.fromJson(response);
+    if (productsResponse.products != null ||
+        productsResponse.products!.isNotEmpty) {
+      return Right(productsResponse.products!);
+    } else {
+      return Left(Failure(productsResponse.message ?? "Something went Wrong!"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ProductDM>>> getProductsByCategory(
+      String id) async {
+    final response = await api
+        .get("${ApiConstants.getAllProductsEndPoint}?category[in]=$id");
     ProductsResponse productsResponse = ProductsResponse.fromJson(response);
     if (productsResponse.products != null ||
         productsResponse.products!.isNotEmpty) {
