@@ -8,6 +8,7 @@ import 'package:ecommerce_app/presentation/view_model/product_view_models/produc
 import 'package:ecommerce_app/presentation/view_model/product_view_models/products_view_model.dart';
 import 'package:ecommerce_app/presentation/view_model/states/base_states.dart';
 import 'package:ecommerce_app/utils/app_assets.dart';
+import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,8 +31,12 @@ class _HomeTabState extends State<HomeTab> {
   @override
   void initState() {
     super.initState();
-    categoriesViewModel.getCategories();
-    productsViewModel.getProducts();
+    if (categoriesViewModel.categoriesList.isEmpty) {
+      categoriesViewModel.getCategories();
+    }
+    if (productsViewModel.productsList.isEmpty) {
+      productsViewModel.getProducts();
+    }
   }
 
   @override
@@ -39,87 +44,85 @@ class _HomeTabState extends State<HomeTab> {
     return Container(
       margin: const EdgeInsets.only(left: 10, top: 10),
       child: SingleChildScrollView(
-        child:
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              BlocBuilder<ProductDetailsViewModel, dynamic>(
-                  bloc: productDetailsViewModel,
-                  builder: (context, state) => Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        child: SliderWidget(
-                          images: AppAssets.slides,
-                          viewModel: productDetailsViewModel,
-                          isLocalImages: true,
-                        ),
-                      )),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const HomeTitle(title: "Categories"),
-                  TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "View all",
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ))
-                ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            BlocBuilder<ProductDetailsViewModel, dynamic>(
+                bloc: productDetailsViewModel,
+                builder: (context, state) => Container(
+                      margin: const EdgeInsets.only(right: 10),
+                      child: SliderWidget(
+                        images: AppAssets.slides,
+                        viewModel: productDetailsViewModel,
+                        isLocalImages: true,
+                      ),
+                    )),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const HomeTitle(title: "Categories"),
+                TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "View all",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall!
+                          .copyWith(color: AppColors.secondary),
+                    ))
+              ],
+            ),
+            SizedBox(
+              height: 230.h,
+              child: BlocBuilder(
+                bloc: categoriesViewModel,
+                builder: (_, state) {
+                  switch (state) {
+                    case BaseLoadingState():
+                      return const LoadingWidget();
+
+                    case BaseErrorState():
+                      return Text(state.errorMessage);
+
+                    case BaseSuccessState():
+                      return CategoriesGridView(
+                        categories: categoriesViewModel.categoriesList,
+                      );
+
+                    default:
+                      return const Text("Something went Wrong");
+                  }
+                },
               ),
-              SizedBox(
-                height: 250.h,
-                child: BlocBuilder(
-                  bloc: categoriesViewModel,
-                  builder: (_, state) {
-                    switch (state) {
-                      case BaseLoadingState():
-                        return const LoadingWidget();
+            ),
+            const HomeTitle(title: "Most Selling"),
+            SizedBox(
+              height: 10.h,
+            ),
+            Container(
+              height: MediaQuery.sizeOf(context).height * 0.28,
+              margin: EdgeInsets.only(bottom: 16.h),
+              child: BlocBuilder(
+                bloc: productsViewModel,
+                builder: (_, state) {
+                  switch (state) {
+                    case BaseLoadingState():
+                      return const LoadingWidget();
 
-                      case BaseErrorState():
-                        return Text(state.errorMessage);
+                    case BaseErrorState():
+                      return Text(state.errorMessage);
 
-                      case BaseSuccessState():
-                        return CategoriesGridView(
-                          categories: state.data,
-                        );
+                    case BaseSuccessState():
+                      return ProductsList(products: productsViewModel.productsList);
 
-                      default:
-                        return const Text("Something went Wrong");
-                    }
-                  },
-                ),
+                    default:
+                      return const Text("Something went Wrong");
+                  }
+                },
               ),
-              SizedBox(
-                height: 10.h,
-              ),
-              const HomeTitle(title: "Most Selling"),
-              SizedBox(
-                height: 10.h,
-              ),
-              Container(
-                height: MediaQuery.sizeOf(context).height * 0.28,
-                margin: EdgeInsets.only(bottom: 16.h),
-                child: BlocBuilder(
-                  bloc: productsViewModel,
-                  builder: (_, state) {
-                    switch (state) {
-                      case BaseLoadingState():
-                        return const LoadingWidget();
-
-                      case BaseErrorState():
-                        return Text(state.errorMessage);
-
-                      case BaseSuccessState():
-                        return ProductsList(products: state.data);
-
-                      default:
-                        return const Text("Something went Wrong");
-                    }
-                  },
-                ),
-              ),
-            ],
-          ),
-
+            ),
+          ],
+        ),
       ),
     );
   }

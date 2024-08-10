@@ -15,7 +15,7 @@ class HomeTitle extends StatelessWidget {
       style: Theme.of(context)
           .textTheme
           .headlineLarge!
-          .copyWith(color: AppColors.primary, fontSize: 16.sp),
+          .copyWith(color: AppColors.secondary, fontSize: 16.sp),
     );
   }
 }

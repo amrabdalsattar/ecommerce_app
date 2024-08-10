@@ -1,4 +1,4 @@
-abstract class BaseState {}
+sealed class BaseState {}
 
 class BaseInitialState extends BaseState {}
 

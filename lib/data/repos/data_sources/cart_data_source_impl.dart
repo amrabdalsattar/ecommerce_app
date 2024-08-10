@@ -22,16 +22,15 @@ class CartDataSourceImpl extends CartDataSource {
 
   @override
   Future<Either<Failure, CartDM>> addItemToCart(String id) async {
-    final response = await api
+    await api
         .post(ApiConstants.getLoggedUserCartEndPoint, data: {"productId": id});
     return getLoggedUserCart();
   }
 
   @override
   Future<Either<Failure, CartDM>> removeItemFromCart(String id) async {
-    final response =
-        await api.delete("${ApiConstants.getLoggedUserCartEndPoint}/$id");
-    CartResponse cartResponse = CartResponse.fromJson(response);
+    await api.delete("${ApiConstants.getLoggedUserCartEndPoint}/$id");
+
 
     return getLoggedUserCart();
   }

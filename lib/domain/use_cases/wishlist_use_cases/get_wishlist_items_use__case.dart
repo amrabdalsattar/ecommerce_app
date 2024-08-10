@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../data/models/failure.dart';
-import '../../../data/models/responses/wishlist_responses/wishlist_response.dart';
+import '../../../data/models/responses/products_responses/products_response.dart';
 import '../../repos/wishlist_repo.dart';
 
 @injectable
@@ -11,7 +11,7 @@ class GetWishlistItemsUseCase {
 
   const GetWishlistItemsUseCase(this.repo);
 
-  Future<Either<Failure, List<WishlistItem>>> execute() {
+  Future<Either<Failure, List<ProductDM>>> execute() {
     return repo.getWishlistItems();
   }
 }

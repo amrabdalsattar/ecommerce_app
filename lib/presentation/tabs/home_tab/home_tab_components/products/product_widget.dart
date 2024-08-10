@@ -6,6 +6,7 @@ import 'package:ecommerce_app/presentation/tabs/home_tab/home_tab_components/pro
 import 'package:ecommerce_app/presentation/view_model/cart_view_model.dart';
 import 'package:ecommerce_app/presentation/view_model/product_view_models/products_view_model.dart';
 import 'package:ecommerce_app/presentation/view_model/states/base_states.dart';
+import 'package:ecommerce_app/presentation/view_model/wishlist_view_model.dart';
 import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:ecommerce_app/utils/dialog_utils.dart';
 import 'package:ecommerce_app/utils/ui_logic_functions.dart';
@@ -18,7 +19,9 @@ import '../../../../../utils/app_assets.dart';
 class ProductWidget extends StatefulWidget {
   final ProductDM product;
   final bool isInCart;
+  final bool isInWishlist;
   final CartViewModel cartViewModel;
+  final WishlistViewModel wishlistViewModel;
   final String heroTag;
 
   const ProductWidget(
@@ -26,7 +29,9 @@ class ProductWidget extends StatefulWidget {
       required this.product,
       required this.isInCart,
       required this.cartViewModel,
-      required this.heroTag});
+      required this.heroTag,
+      required this.isInWishlist,
+      required this.wishlistViewModel});
 
   @override
   State<ProductWidget> createState() => _ProductWidgetState();
@@ -34,6 +39,7 @@ class ProductWidget extends StatefulWidget {
 
 class _ProductWidgetState extends State<ProductWidget> {
   bool isLoadingToCart = false;
+  bool isLoadingToWishlist = false;
   ProductsViewModel viewModel = getIt();
 
   @override
@@ -68,17 +74,36 @@ class _ProductWidgetState extends State<ProductWidget> {
                       fit: BoxFit.cover,
                       width: MediaQuery.sizeOf(context).width,
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(5),
-                      margin: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          color: AppColors.white,
-                          borderRadius: BorderRadius.circular(30)),
-                      child: Image.asset(
-                        AppAssets.wishlistIcon,
-                        color: AppColors.primary,
-                        height: 15.h,
-                        width: 15.w,
+                    BlocListener<WishlistViewModel, WishlistState>(
+                      listener: (_, state) {
+                        switch (state) {
+                          case WishlistLoading():
+                            isLoadingToWishlist = true;
+                          case WishlistError():
+                            isLoadingToWishlist = false;
+                          case WishlistSuccess():
+                            isLoadingToWishlist = false;
+                          default:
+                        }
+                      },
+                      bloc: widget.wishlistViewModel,
+                      child: GestureDetector(
+                        onTap: () {
+                          if (widget.isInWishlist) {
+                            widget.wishlistViewModel
+                                .removeFromWishlist(widget.product);
+                          } else {
+                            widget.wishlistViewModel
+                                .addToWishlist(widget.product);
+                          }
+                        },
+                        child: widget.isInWishlist
+                            ? Image.asset(
+                                AppAssets.inWishlistIcon,
+                              )
+                            : Image.asset(
+                                AppAssets.notInWishlistIcon,
+                              ),
                       ),
                     )
                   ],
@@ -95,7 +120,10 @@ class _ProductWidgetState extends State<ProductWidget> {
                   children: [
                     Text(
                       widget.product.title ?? "",
-                      style: Theme.of(context).textTheme.bodySmall,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall!
+                          .copyWith(color: AppColors.secondary),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -112,7 +140,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall!
-                                  .copyWith(fontSize: 10.5.sp),
+                                  .copyWith(fontSize: 10.5.sp, color: AppColors.secondary),
                             ),
                             SizedBox(
                               width: 10.w,
@@ -130,7 +158,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall!
-                                  .copyWith(fontSize: 11.sp),
+                                  .copyWith(fontSize: 11.sp, color: AppColors.secondary),
                             ),
                             const Spacer(),
                             SizedBox(

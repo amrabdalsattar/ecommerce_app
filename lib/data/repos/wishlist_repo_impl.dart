@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:ecommerce_app/data/models/failure.dart';
-import 'package:ecommerce_app/data/models/responses/wishlist_responses/wishlist_response.dart';
 import 'package:ecommerce_app/domain/repos/data_sources/wishlist_data_source.dart';
 import 'package:injectable/injectable.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import '../../domain/repos/wishlist_repo.dart';
+import '../models/responses/products_responses/products_response.dart';
 
 @Injectable(as: WishlistRepo)
 class WishlistRepoImpl extends WishlistRepo {
@@ -25,7 +25,7 @@ class WishlistRepoImpl extends WishlistRepo {
   }
 
   @override
-  Future<Either<Failure, List<WishlistItem>>> getWishlistItems() async {
+  Future<Either<Failure, List<ProductDM>>> getWishlistItems() async {
     bool isConnectedToInternet = await connectionChecker.hasConnection;
     if (isConnectedToInternet) {
       return dataSource.getWishlistItems();

@@ -28,13 +28,10 @@ class CategoryWidget extends StatelessWidget {
                 ));
           },
           child: CircleAvatar(
-            radius: 45,
+            radius: 40,
             backgroundImage: CachedNetworkImageProvider(categoryDM.image ?? ''),
             backgroundColor: AppColors.liteGrey,
           ),
-        ),
-        SizedBox(
-          height: 10.h,
         ),
         SizedBox(
             child: Center(
@@ -46,7 +43,7 @@ class CategoryWidget extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .bodySmall!
-              .copyWith(color: AppColors.primary),
+              .copyWith(color: AppColors.secondary, fontSize: 11.5.sp),
         )))
       ],
     );

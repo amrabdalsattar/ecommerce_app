@@ -7,6 +7,8 @@ import 'package:ecommerce_app/utils/networking/api_constants.dart';
 import 'package:ecommerce_app/utils/networking/api_factory.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../models/responses/products_responses/products_response.dart';
+
 @Injectable(as: WishlistDataSource)
 class WishlistDataSourceImpl extends WishlistDataSource {
   final ApiFactory api;
@@ -20,26 +22,19 @@ class WishlistDataSourceImpl extends WishlistDataSource {
           .post(ApiConstants.wishlistEndPoint, data: {"productId": id});
       WishlistFunctionalityResponse wishlistFunctionalityResponse =
           WishlistFunctionalityResponse.fromJson(response);
-      if (wishlistFunctionalityResponse.status == "success") {
-        return Right(wishlistFunctionalityResponse.message);
-      } else {
-        return Left(Failure(wishlistFunctionalityResponse.message!));
-      }
+
+      return Right(wishlistFunctionalityResponse.message);
     } catch (e) {
       return Left(Failure(e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, List<WishlistItem>>> getWishlistItems() async {
+  Future<Either<Failure, List<ProductDM>>> getWishlistItems() async {
     try {
-      final response = await api.post(ApiConstants.wishlistEndPoint);
+      final response = await api.get(ApiConstants.wishlistEndPoint);
       WishlistResponse wishlistResponse = WishlistResponse.fromJson(response);
-      if (wishlistResponse.status == "success") {
-        return Right(wishlistResponse.data!);
-      } else {
-        return Left(Failure(wishlistResponse.status!));
-      }
+      return Right(wishlistResponse.data!);
     } catch (e) {
       return Left(Failure(e.toString()));
     }
@@ -48,14 +43,10 @@ class WishlistDataSourceImpl extends WishlistDataSource {
   @override
   Future<Either<Failure, String?>> removeFromWishlist(String id) async {
     try {
-      final response = await api.post("${ApiConstants.wishlistEndPoint}/$id");
+      final response = await api.delete("${ApiConstants.wishlistEndPoint}/$id");
       WishlistFunctionalityResponse wishlistFunctionalityResponse =
           WishlistFunctionalityResponse.fromJson(response);
-      if (wishlistFunctionalityResponse.status == "success") {
-        return Right(wishlistFunctionalityResponse.message);
-      } else {
-        return Left(Failure(wishlistFunctionalityResponse.message!));
-      }
+      return Right(wishlistFunctionalityResponse.message);
     } catch (e) {
       return Left(Failure(e.toString()));
     }

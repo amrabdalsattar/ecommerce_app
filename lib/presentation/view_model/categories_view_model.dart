@@ -11,31 +11,35 @@ import '../../data/models/responses/products_responses/products_response.dart';
 
 @injectable
 class CategoriesViewModel extends Cubit<BaseState> {
-  CategoriesViewModel(
-      this.getAllCategoriesUseCase, this.getProductsByCategoryUseCase)
+  CategoriesViewModel(this.getAllCategoriesUseCase,
+      this.getProductsByCategoryUseCase)
       : super(BaseInitialState());
   final GetAllCategoriesUseCase getAllCategoriesUseCase;
   final GetProductsByCategoryUseCase getProductsByCategoryUseCase;
+  List<CategoryDM> categoriesList = [];
 
   void getCategories() async {
     emit(BaseLoadingState());
     Either<Failure, List<CategoryDM>> response =
-        await getAllCategoriesUseCase.execute();
+    await getAllCategoriesUseCase.execute();
     response.fold(
-        (error) => emit(BaseErrorState(error.errorMessage)),
-        (categories) =>
-            emit(BaseSuccessState<List<CategoryDM>>(data: categories)));
+            (error) => emit(BaseErrorState(error.errorMessage)),
+            (categories) {
+              categoriesList = categories;
+          emit(BaseSuccessState<List<CategoryDM>>(data: categories));
+        });
   }
 
   void getProductByCategory(String id) async {
     emit(BaseLoadingState());
     Either<Failure, List<ProductDM>> response =
-        await getProductsByCategoryUseCase.execute(id);
+    await getProductsByCategoryUseCase.execute(id);
     response.fold(
-        (error) => emit(BaseErrorState(error.errorMessage)),
-        (products) => products.isEmpty
+            (error) => emit(BaseErrorState(error.errorMessage)),
+            (products) =>
+        products.isEmpty
             ? emit(BaseErrorState(
-                "Sorry, There is no items under this category right now."))
+            "Sorry, There is no items under this category right now."))
             : emit(BaseSuccessState(data: products)));
   }
 }

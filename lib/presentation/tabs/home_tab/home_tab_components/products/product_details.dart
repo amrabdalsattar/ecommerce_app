@@ -138,7 +138,8 @@ class ProductDetails extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                         trimLines: 3,
                         style: TextStyle(
-                            color: AppColors.fadeBlue, fontSize: 13.sp)),
+                            color: AppColors.fadeBlue, fontSize: 13.sp)
+                    ),
                   ],
                 ),
               ),
