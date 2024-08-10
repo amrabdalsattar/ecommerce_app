@@ -1,12 +1,12 @@
 import 'package:ecommerce_app/data/models/responses/categories_responses/categories_response.dart';
 import 'package:ecommerce_app/presentation/tabs/categories_tab/categories_tab_widgets/category_products_list.dart';
 import 'package:ecommerce_app/presentation/tabs/categories_tab/categories_tab_widgets/category_tab_widget.dart';
-import 'package:ecommerce_app/presentation/view_model/categories_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../domain/di/di.dart';
 import '../../../../utils/app_colors.dart';
+import '../../../view_model/categories_view_model.dart';
 
 class CustomTabController extends StatefulWidget {
   final List<CategoryDM> categories;
@@ -45,25 +45,29 @@ class _CustomTabControllerState extends State<CustomTabController> {
 
                         labelColor: AppColors.primary,
                         unselectedLabelColor: AppColors.primary,
-                        labelStyle: Theme.of(context)
+                        labelStyle: Theme
+                            .of(context)
                             .textTheme
                             .bodySmall!
-                            .copyWith(fontWeight: FontWeight.bold, fontSize: 11.sp),
+                            .copyWith(
+                            fontWeight: FontWeight.bold, fontSize: 11.sp),
                         indicatorWeight: 5,
                         splashBorderRadius: BorderRadius.circular(20),
                         physics: const BouncingScrollPhysics(),
                         automaticIndicatorColorAdjustment: true,
                         tabAlignment: TabAlignment.start,
-                        overlayColor: const WidgetStatePropertyAll(AppColors.white),
+                        overlayColor: const WidgetStatePropertyAll(
+                            AppColors.white),
                         indicatorColor: AppColors.primary,
                         isScrollable: true,
                         labelPadding: const EdgeInsets.symmetric(horizontal: 2),
                         tabs: widget.categories
-                            .map((category) => CategoryTabWidget(
-                                  title: category.name!,
-                                  isSelected: currentTabIndex ==
-                                      widget.categories.indexOf(category),
-                                )
+                            .map((category) =>
+                            CategoryTabWidget(
+                              title: category.name!,
+                              isSelected: currentTabIndex ==
+                                  widget.categories.indexOf(category),
+                            )
                         )
                             .toList(),
                       ),
@@ -73,9 +77,10 @@ class _CustomTabControllerState extends State<CustomTabController> {
                 Expanded(
                   flex: 7,
                   child: TabBarView(
-                    physics: const NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       children: widget.categories
-                          .map((category) => CategoryProductsList(categoryId: category.id!))
+                          .map((category) =>
+                          CategoryProductsList(categoryId: category.id!))
                           .toList()),
                 )
               ],

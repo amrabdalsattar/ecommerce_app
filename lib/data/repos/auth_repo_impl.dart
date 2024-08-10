@@ -14,15 +14,15 @@ import '../models/responses/auth_response.dart';
 @Injectable(as: AuthRepo)
 class AuthRepoImpl extends AuthRepo {
   final ApiFactory api;
-
-  AuthRepoImpl(this.api);
+  final InternetConnectionChecker connectionChecker;
+  AuthRepoImpl(this.api, this.connectionChecker);
 
   @override
   Future<Either<Failure, bool>> login(
       {required String email, required String password}) async {
     try{
       final bool isConnectedToInternet =
-      await InternetConnectionChecker().hasConnection;
+      await connectionChecker.hasConnection;
       if (isConnectedToInternet) {
         final serverResponse = await api.post(ApiConstants.loginEndPoint,
             data: {"email": email, "password": password});
@@ -52,7 +52,7 @@ class AuthRepoImpl extends AuthRepo {
       {required RegisterRequest data}) async {
     try{
       final bool isConnectedToInternet =
-      await InternetConnectionChecker().hasConnection;
+      await connectionChecker.hasConnection;
       if (isConnectedToInternet) {
 
           final serverResponse =

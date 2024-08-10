@@ -17,7 +17,6 @@ class MainScreenAppBar extends StatelessWidget {
         sliver: SliverAppBar(
           pinned: true,
           floating: true,
-          snap: true,
           title: Image.asset(AppAssets.blueLogo),
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(42.9.h),

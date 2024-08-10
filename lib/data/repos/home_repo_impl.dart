@@ -11,13 +11,13 @@ import '../../domain/repos/home_repo.dart';
 @Injectable(as: HomeRepo)
 class HomeRepoImpl extends HomeRepo {
   final HomeOnlineDs ds;
-
-  HomeRepoImpl(this.ds);
+  final InternetConnectionChecker connectionChecker;
+  HomeRepoImpl(this.ds, this.connectionChecker);
 
   @override
   Future<Either<Failure, List<CategoryDM>>> getCategories() async {
     bool isConnectedToInternet =
-        await InternetConnectionChecker().hasConnection;
+        await connectionChecker.hasConnection;
     if (isConnectedToInternet) {
       return ds.getCategories();
     } else {
@@ -28,7 +28,7 @@ class HomeRepoImpl extends HomeRepo {
   @override
   Future<Either<Failure, List<ProductDM>>> getProducts() async {
     bool isConnectedToInternet =
-        await InternetConnectionChecker().hasConnection;
+        await connectionChecker.hasConnection;
     if (isConnectedToInternet) {
       return ds.getProducts();
     } else {
@@ -39,7 +39,7 @@ class HomeRepoImpl extends HomeRepo {
   @override
   Future<Either<Failure, List<ProductDM>>> getProductsByCategory(String id) async {
     bool isConnectedToInternet =
-        await InternetConnectionChecker().hasConnection;
+        await connectionChecker.hasConnection;
     if (isConnectedToInternet) {
       return ds.getProductsByCategory(id);
     } else {
