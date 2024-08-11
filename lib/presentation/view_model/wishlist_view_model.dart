@@ -53,12 +53,14 @@ class WishlistViewModel extends Cubit<WishlistState> {
     });
   }
 
-  void removeFromWishlist(ProductDM product) async {
+  void removeFromWishlist(ProductDM product,
+      {bool isTransferredFromWishlistToCart = false}) async {
     wishlistItems.remove(product);
     emit(WishlistLoading());
     Either<Failure, String?> response =
         await removeFromWishlistUseCase.execute(product.id!);
     response.fold((error) {
+      wishlistItems.add(product);
       showToast(
           message: error.errorMessage,
           color: AppColors.red,
@@ -66,10 +68,17 @@ class WishlistViewModel extends Cubit<WishlistState> {
       emit(WishlistError(error.errorMessage));
     }, (successMessage) {
       getWishlistItems();
-      showToast(
-          message: successMessage!,
-          color: AppColors.fadedWhite,
-          textColor: AppColors.primary);
+      if (isTransferredFromWishlistToCart) {
+        showToast(
+            message: "Product added to cart successfully",
+            color: AppColors.fadedWhite,
+            textColor: AppColors.primary);
+      }else{
+        showToast(
+            message: successMessage!,
+            color: AppColors.fadedWhite,
+            textColor: AppColors.primary);
+      }
       emit(WishlistSuccess(data: successMessage));
     });
   }

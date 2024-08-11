@@ -10,7 +10,6 @@ import 'presentation/screens/auth_screens/login_screen/login_screen.dart';
 import 'presentation/screens/auth_screens/register_screen/register_screen.dart';
 import 'presentation/screens/main_screen/main_screen.dart';
 import 'presentation/screens/main_screen/main_screen_components/cart/cart_screen.dart';
-import 'presentation/tabs/home_tab/home_tab_components/products/product_details.dart';
 import 'utils/app_themes.dart';
 
 void main() async {
@@ -18,12 +17,10 @@ void main() async {
   await ScreenUtil.ensureScreenSize();
   await CacheData.cacheInitialization();
   configureDependencies();
-  runApp(MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => getIt<CartViewModel>()),
-        BlocProvider(create: (_) => getIt<WishlistViewModel>()),
-      ],
-      child: const ECommerceApp()));
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider(create: (_) => getIt<CartViewModel>()),
+    BlocProvider(create: (_) => getIt<WishlistViewModel>()),
+  ], child: const ECommerceApp()));
 }
 
 class ECommerceApp extends StatelessWidget {
@@ -31,7 +28,6 @@ class ECommerceApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       minTextAdapt: true,
@@ -41,7 +37,6 @@ class ECommerceApp extends StatelessWidget {
           RegisterScreen.routeName: (_) => const RegisterScreen(),
           LoginScreen.routeName: (_) => const LoginScreen(),
           MainScreen.routeName: (_) => const MainScreen(),
-          ProductDetails.routeName: (_) => const ProductDetails(),
           CartScreen.routeName: (_) => const CartScreen(),
         },
         initialRoute: CacheData.getData(key: "token") == null

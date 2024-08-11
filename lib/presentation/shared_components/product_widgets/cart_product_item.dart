@@ -7,16 +7,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../data/models/responses/products_responses/cart_response.dart';
-import '../../../../../utils/app_colors.dart';
-import '../../../../shared_components/loading_widget.dart';
+import '../../../data/models/responses/products_responses/cart_response.dart';
+import '../../../utils/app_colors.dart';
+import '../loading_widget.dart';
 
-class CartItem extends StatelessWidget {
+class CartProductItem extends StatelessWidget {
   final CartViewModel cartViewModel;
   final CartProduct cartProduct;
   final ProductDetailsViewModel productDetailsViewModel;
 
-  const CartItem(
+  const CartProductItem(
       {super.key,
       required this.cartProduct,
       required this.cartViewModel,

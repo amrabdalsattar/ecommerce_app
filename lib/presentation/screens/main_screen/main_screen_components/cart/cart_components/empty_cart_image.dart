@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EmptyCartImage extends StatelessWidget {
-  const EmptyCartImage({super.key});
+  final String screenTitle;
+  const EmptyCartImage({super.key, required this.screenTitle});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class EmptyCartImage extends StatelessWidget {
           ),
         ),
         Text(
-          "Your cart is empty",
+          "Your $screenTitle is empty",
           style: Theme.of(context)
               .textTheme
               .bodyLarge!
@@ -27,7 +28,7 @@ class EmptyCartImage extends StatelessWidget {
         Container(
           margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
           child: Text(
-            "Looks like you have not added anything to your cart. Go ahead & explore our products.",
+            "Looks like you have not added anything to your $screenTitle. Go ahead & explore our products.",
             style: Theme.of(context)
                 .textTheme
                 .bodyMedium!

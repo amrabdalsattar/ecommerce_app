@@ -14,10 +14,12 @@ class MethodsButton extends StatelessWidget {
     return ElevatedButton(
         onPressed: onPressed,
         style: ButtonStyle(
+          padding: const WidgetStatePropertyAll(EdgeInsets.zero),
             shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15))),
             fixedSize: WidgetStatePropertyAll(Size(220.w, 20.h)),
             backgroundColor: const WidgetStatePropertyAll(AppColors.primary)),
-        child: body);
+        child: body,
+    );
   }
 }

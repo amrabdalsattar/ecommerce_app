@@ -1,5 +1,5 @@
 import 'package:ecommerce_app/presentation/screens/main_screen/main_screen_components/cart/cart_components/empty_cart_image.dart';
-import 'package:ecommerce_app/presentation/screens/main_screen/main_screen_components/cart/cart_item.dart';
+import 'package:ecommerce_app/presentation/shared_components/product_widgets/cart_product_item.dart';
 import 'package:ecommerce_app/presentation/shared_components/buttons/methods_button.dart';
 import 'package:ecommerce_app/presentation/view_model/cart_view_model.dart';
 import 'package:ecommerce_app/presentation/view_model/product_view_models/product_details_view_model.dart';
@@ -35,7 +35,7 @@ class CartScreen extends StatelessWidget {
           builder: (_, state) => Container(
             child: cartViewModel.cartDM == null ||
                     cartViewModel.cartDM!.products!.isEmpty
-                ? const EmptyCartImage()
+                ? const EmptyCartImage(screenTitle: 'cart',)
                 : Column(
                     children: [
                       Expanded(
@@ -43,7 +43,7 @@ class CartScreen extends StatelessWidget {
                         child: ListView.builder(
                           itemCount:
                               cartViewModel.cartDM?.products?.length ?? 0,
-                          itemBuilder: (context, index) => CartItem(
+                          itemBuilder: (context, index) => CartProductItem(
                             cartProduct: cartViewModel.cartDM!.products![index],
                             cartViewModel: cartViewModel,
                             productDetailsViewModel: productDetailsViewModel,

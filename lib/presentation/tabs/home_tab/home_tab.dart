@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/domain/di/di.dart';
 import 'package:ecommerce_app/presentation/shared_components/home_title.dart';
-import 'package:ecommerce_app/presentation/shared_components/loading_widget.dart';
+import 'package:ecommerce_app/presentation/shared_components/shimmers/category_shimmer_loading.dart';
+import 'package:ecommerce_app/presentation/shared_components/shimmers/product_shimmer_loading.dart';
 import 'package:ecommerce_app/presentation/shared_components/slider_widget.dart';
 import 'package:ecommerce_app/presentation/tabs/home_tab/home_tab_components/products/products_list.dart';
 import 'package:ecommerce_app/presentation/view_model/categories_view_model.dart';
@@ -79,7 +80,7 @@ class _HomeTabState extends State<HomeTab> {
                 builder: (_, state) {
                   switch (state) {
                     case BaseLoadingState():
-                      return const LoadingWidget();
+                      return const CategoryShimmerLoading();
 
                     case BaseErrorState():
                       return Text(state.errorMessage);
@@ -107,7 +108,7 @@ class _HomeTabState extends State<HomeTab> {
                 builder: (_, state) {
                   switch (state) {
                     case BaseLoadingState():
-                      return const LoadingWidget();
+                      return const ProductShimmerLoading();
 
                     case BaseErrorState():
                       return Text(state.errorMessage);

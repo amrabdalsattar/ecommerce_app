@@ -1,20 +1,23 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ecommerce_app/data/models/responses/products_responses/products_response.dart';
-import 'package:ecommerce_app/domain/di/di.dart';
-import 'package:ecommerce_app/presentation/shared_components/loading_widget.dart';
-import 'package:ecommerce_app/presentation/tabs/home_tab/home_tab_components/products/product_details.dart';
-import 'package:ecommerce_app/presentation/view_model/cart_view_model.dart';
-import 'package:ecommerce_app/presentation/view_model/product_view_models/products_view_model.dart';
-import 'package:ecommerce_app/presentation/view_model/states/base_states.dart';
-import 'package:ecommerce_app/presentation/view_model/wishlist_view_model.dart';
-import 'package:ecommerce_app/utils/app_colors.dart';
-import 'package:ecommerce_app/utils/dialog_utils.dart';
-import 'package:ecommerce_app/utils/ui_logic_functions.dart';
+import 'package:ecommerce_app/presentation/shared_components/custom_network_image.dart';
+import 'package:ecommerce_app/presentation/shared_components/product_widgets/wishlist_item_widget.dart';
+import 'package:ecommerce_app/utils/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../utils/app_assets.dart';
+import '../../../data/models/responses/products_responses/products_response.dart';
+import '../../../domain/di/di.dart';
+import '../../../utils/app_assets.dart';
+import '../../../utils/app_colors.dart';
+import '../../../utils/dialog_utils.dart';
+import '../../../utils/ui_logic_functions.dart';
+import '../../tabs/home_tab/home_tab_components/products/product_details.dart';
+import '../../view_model/cart_view_model.dart';
+import '../../view_model/product_view_models/products_view_model.dart';
+import '../../view_model/states/base_states.dart';
+import '../../view_model/wishlist_view_model.dart';
+import '../loading_widget.dart';
+import 'category_product_widget.dart';
 
 class ProductWidget extends StatefulWidget {
   final ProductDM product;
@@ -35,6 +38,21 @@ class ProductWidget extends StatefulWidget {
 
   @override
   State<ProductWidget> createState() => _ProductWidgetState();
+
+  categoryProductItem() => CategoryProductWidget(
+        product: product,
+        isInCart: isInCart,
+        cartViewModel: cartViewModel,
+        heroTag: heroTag,
+        wishlistViewModel: wishlistViewModel,
+        isInWishlist: isInWishlist,
+      );
+
+  wishlistProductItem() => WishlistItemWidget(
+        product: product,
+        cartViewModel: cartViewModel,
+        wishlistViewModel: wishlistViewModel,
+      );
 }
 
 class _ProductWidgetState extends State<ProductWidget> {
@@ -46,8 +64,8 @@ class _ProductWidgetState extends State<ProductWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, ProductDetails.routeName,
-            arguments: widget.product);
+        NavigationManager.navigationWithSlide(
+            context, ProductDetails(product: widget.product));
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 5.w),
@@ -67,13 +85,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                 child: Stack(
                   alignment: Alignment.topRight,
                   children: [
-                    CachedNetworkImage(
-                      imageUrl: widget.product.imageCover!,
-                      placeholder: (_, __) => const LoadingWidget(),
-                      errorWidget: (_, __, ___) => const Icon(Icons.error),
-                      fit: BoxFit.cover,
-                      width: MediaQuery.sizeOf(context).width,
-                    ),
+                    CustomNetworkImage(imageUrl: widget.product.imageCover!),
                     BlocListener<WishlistViewModel, WishlistState>(
                       listener: (_, state) {
                         switch (state) {
@@ -140,7 +152,9 @@ class _ProductWidgetState extends State<ProductWidget> {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall!
-                                  .copyWith(fontSize: 10.5.sp, color: AppColors.secondary),
+                                  .copyWith(
+                                      fontSize: 10.5.sp,
+                                      color: AppColors.secondary),
                             ),
                             SizedBox(
                               width: 10.w,
@@ -158,7 +172,9 @@ class _ProductWidgetState extends State<ProductWidget> {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall!
-                                  .copyWith(fontSize: 11.sp, color: AppColors.secondary),
+                                  .copyWith(
+                                      fontSize: 11.sp,
+                                      color: AppColors.secondary),
                             ),
                             const Spacer(),
                             SizedBox(

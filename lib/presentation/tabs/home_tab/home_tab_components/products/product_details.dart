@@ -17,15 +17,14 @@ import '../../../../../domain/di/di.dart';
 import '../../../../../utils/app_assets.dart';
 
 class ProductDetails extends StatelessWidget {
-  static const String routeName = "productDetails";
+  final ProductDM product;
 
-  const ProductDetails({super.key});
+  const ProductDetails({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
     ProductDetailsViewModel viewModel = getIt<ProductDetailsViewModel>();
     var cartViewModel = context.read<CartViewModel>();
-    var product = ModalRoute.of(context)!.settings.arguments as ProductDM;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.h),
@@ -138,8 +137,7 @@ class ProductDetails extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                         trimLines: 3,
                         style: TextStyle(
-                            color: AppColors.fadeBlue, fontSize: 13.sp)
-                    ),
+                            color: AppColors.fadeBlue, fontSize: 13.sp)),
                   ],
                 ),
               ),

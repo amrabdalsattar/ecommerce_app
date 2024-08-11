@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/presentation/tabs/home_tab/home_tab_components/products/product_widget.dart';
+import 'package:ecommerce_app/presentation/shared_components/product_widgets/product_widget.dart';
 import 'package:ecommerce_app/presentation/view_model/cart_view_model.dart';
 import 'package:ecommerce_app/presentation/view_model/wishlist_view_model.dart';
 import 'package:flutter/material.dart';
