@@ -8,7 +8,6 @@ void showLoading(BuildContext context) {
   showDialog(
       context: context,
       barrierDismissible: false,
-      barrierColor: AppColors.transparent,
       builder: (_) {
         return Container(
           padding: const EdgeInsets.all(10),

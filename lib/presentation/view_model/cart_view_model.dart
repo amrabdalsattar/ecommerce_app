@@ -54,22 +54,20 @@ class CartViewModel extends Cubit<CartState> {
     });
   }
 
-  bool isInCart(ProductDM product) {
+  CartProduct? isInCart(ProductDM product) {
     if (cartDM != null && cartDM!.products != null) {
       var productsInCart = cartDM!.products!;
       for (int i = 0; i < productsInCart.length; i++) {
         if (product.id == productsInCart[i].product?.id) {
-          return true;
+          return productsInCart[i];
         }
       }
     }
-    return false;
+    return null;
   }
-
-
 }
 
-abstract class CartState {}
+sealed class CartState {}
 
 class CartInitial extends CartState {}
 

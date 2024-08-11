@@ -1,25 +1,37 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/data/models/responses/categories_responses/categories_response.dart';
+import 'package:ecommerce_app/presentation/tabs/home_tab/home_tab_components/categories/category_products_screen.dart';
 import 'package:ecommerce_app/utils/app_colors.dart';
+import 'package:ecommerce_app/utils/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CategoryWidget extends StatelessWidget {
   final CategoryDM categoryDM;
 
-  const CategoryWidget({super.key, required this.categoryDM});
+  const CategoryWidget(
+      {super.key, required this.categoryDM});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CircleAvatar(
-          radius: 45,
-          backgroundImage: CachedNetworkImageProvider(categoryDM.image ?? ''),
-          backgroundColor: AppColors.liteGrey,
-        ),
-        SizedBox(
-          height: 10.h,
+        InkWell(
+          borderRadius: BorderRadius.circular(20),
+          overlayColor: const WidgetStatePropertyAll(AppColors.liteGrey),
+          onTap: (){
+            NavigationManager.navigationWithSlide(
+                context,
+                CategoryProductsScreen(
+                  categoryId: categoryDM.id!,
+                  categoryName: categoryDM.name!,
+                ));
+          },
+          child: CircleAvatar(
+            radius: 40,
+            backgroundImage: CachedNetworkImageProvider(categoryDM.image ?? ''),
+            backgroundColor: AppColors.liteGrey,
+          ),
         ),
         SizedBox(
             child: Center(
@@ -31,7 +43,7 @@ class CategoryWidget extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .bodySmall!
-              .copyWith(color: AppColors.primary),
+              .copyWith(color: AppColors.secondary, fontSize: 11.5.sp),
         )))
       ],
     );

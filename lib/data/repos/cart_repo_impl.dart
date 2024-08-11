@@ -9,13 +9,13 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 @Injectable(as: CartRepo)
 class CartRepoImpl extends CartRepo {
   final CartDataSource ds;
-
-  CartRepoImpl(this.ds);
+  final InternetConnectionChecker connectionChecker;
+  CartRepoImpl(this.ds, this.connectionChecker);
 
   @override
   Future<Either<Failure, CartDM>> addItemToCart(String id) async {
     bool isConnectedToInternet =
-        await InternetConnectionChecker().hasConnection;
+        await connectionChecker.hasConnection;
     if (isConnectedToInternet) {
       return ds.addItemToCart(id);
     } else {
@@ -26,7 +26,7 @@ class CartRepoImpl extends CartRepo {
   @override
   Future<Either<Failure, CartDM>> getLoggedUserCart() async {
     bool isConnectedToInternet =
-        await InternetConnectionChecker().hasConnection;
+        await connectionChecker.hasConnection;
     if (isConnectedToInternet) {
       return ds.getLoggedUserCart();
     } else {
@@ -37,7 +37,7 @@ class CartRepoImpl extends CartRepo {
   @override
   Future<Either<Failure, CartDM>> removeItemFromCart(String id) async {
     bool isConnectedToInternet =
-        await InternetConnectionChecker().hasConnection;
+        await connectionChecker.hasConnection;
     if (isConnectedToInternet) {
       return ds.removeItemFromCart(id);
     } else {

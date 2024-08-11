@@ -56,7 +56,7 @@ class ProductDM {
   String? title;
   String? slug;
   String? description;
-  int? quantity;
+  num? quantity;
   int? price;
   String? imageCover;
   ProductCategory? category;

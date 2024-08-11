@@ -9,6 +9,7 @@ import 'package:injectable/injectable.dart';
 @injectable
 class ProductsViewModel extends Cubit<BaseState> {
   final GetAllProductsUseCase useCase;
+  List<ProductDM> productsList = [];
 
   ProductsViewModel(this.useCase) : super(BaseInitialState());
 
@@ -19,7 +20,8 @@ class ProductsViewModel extends Cubit<BaseState> {
       (error) => emit(BaseErrorState(error.errorMessage)),
       (products) {
         products.sort((a, b) => b.sold!.compareTo(a.sold!));
-        emit(BaseSuccessState<List<ProductDM>>(data: products));
+        productsList = products;
+        emit(BaseSuccessState<List<ProductDM>>(data: productsList));
       },
     );
   }

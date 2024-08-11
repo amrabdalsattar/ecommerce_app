@@ -1,6 +1,6 @@
 import '../base_response.dart';
 
-class Brand  extends BaseResponse{
+class Brand extends BaseResponse {
   Brand({
     this.id,
     this.name,

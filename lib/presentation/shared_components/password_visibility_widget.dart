@@ -4,10 +4,12 @@ import '../../utils/app_colors.dart';
 
 class PasswordVisibilityWidget extends StatefulWidget {
   final bool isObscure;
+
   const PasswordVisibilityWidget({super.key, required this.isObscure});
 
   @override
-  State<PasswordVisibilityWidget> createState() => _PasswordVisibilityWidgetState();
+  State<PasswordVisibilityWidget> createState() =>
+      _PasswordVisibilityWidgetState();
 }
 
 class _PasswordVisibilityWidgetState extends State<PasswordVisibilityWidget> {
@@ -18,11 +20,10 @@ class _PasswordVisibilityWidgetState extends State<PasswordVisibilityWidget> {
         color: AppColors.grey,
         onPressed: () {
           widget.isObscure == !widget.isObscure;
-          setState(() {
-
-          });
+          setState(() {});
         },
-        icon: widget.isObscure ? const Icon(Icons.visibility_off) : const Icon(
-            Icons.visibility));
+        icon: widget.isObscure
+            ? const Icon(Icons.visibility_off)
+            : const Icon(Icons.visibility));
   }
 }

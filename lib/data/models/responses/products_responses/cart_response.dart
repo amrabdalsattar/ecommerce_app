@@ -39,7 +39,7 @@ class CartDM {
   String? createdAt;
   String? updatedAt;
   int? v;
-  int? totalCartPrice;
+  num? totalCartPrice;
 }
 
 class CartProduct {
@@ -52,7 +52,7 @@ class CartProduct {
     price = json['price'];
   }
 
-  int? count;
+  num? count;
   String? id;
   ProductDM? product;
   int? price;

@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/domain/di/di.dart';
 import 'package:ecommerce_app/presentation/shared_components/home_title.dart';
-import 'package:ecommerce_app/presentation/shared_components/loading_widget.dart';
+import 'package:ecommerce_app/presentation/shared_components/shimmers/category_shimmer_loading.dart';
+import 'package:ecommerce_app/presentation/shared_components/shimmers/product_shimmer_loading.dart';
 import 'package:ecommerce_app/presentation/shared_components/slider_widget.dart';
 import 'package:ecommerce_app/presentation/tabs/home_tab/home_tab_components/products/products_list.dart';
 import 'package:ecommerce_app/presentation/view_model/categories_view_model.dart';
@@ -8,6 +9,7 @@ import 'package:ecommerce_app/presentation/view_model/product_view_models/produc
 import 'package:ecommerce_app/presentation/view_model/product_view_models/products_view_model.dart';
 import 'package:ecommerce_app/presentation/view_model/states/base_states.dart';
 import 'package:ecommerce_app/utils/app_assets.dart';
+import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,25 +32,32 @@ class _HomeTabState extends State<HomeTab> {
   @override
   void initState() {
     super.initState();
-    categoriesViewModel.getCategories();
-    productsViewModel.getProducts();
+    if (categoriesViewModel.categoriesList.isEmpty) {
+      categoriesViewModel.getCategories();
+    }
+    if (productsViewModel.productsList.isEmpty) {
+      productsViewModel.getProducts();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        margin: const EdgeInsets.only(left: 10),
-        child: ListView(
+    return Container(
+      margin: const EdgeInsets.only(left: 10, top: 10),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             BlocBuilder<ProductDetailsViewModel, dynamic>(
-              bloc: productDetailsViewModel,
+                bloc: productDetailsViewModel,
                 builder: (context, state) => Container(
-                  margin: const EdgeInsets.only(right: 10),
-                  child: SliderWidget(
-                      images: AppAssets.slides,
-                      viewModel: productDetailsViewModel, isLocalImages: true,),
-                )),
+                      margin: const EdgeInsets.only(right: 10),
+                      child: SliderWidget(
+                        images: AppAssets.slides,
+                        viewModel: productDetailsViewModel,
+                        isLocalImages: true,
+                      ),
+                    )),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -57,33 +66,35 @@ class _HomeTabState extends State<HomeTab> {
                     onPressed: () {},
                     child: Text(
                       "View all",
-                      style: Theme.of(context).textTheme.bodySmall,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall!
+                          .copyWith(color: AppColors.secondary),
                     ))
               ],
             ),
             SizedBox(
-              height: 250.h,
+              height: 230.h,
               child: BlocBuilder(
                 bloc: categoriesViewModel,
                 builder: (_, state) {
                   switch (state) {
                     case BaseLoadingState():
-                      return const LoadingWidget();
+                      return const CategoryShimmerLoading();
 
                     case BaseErrorState():
                       return Text(state.errorMessage);
 
                     case BaseSuccessState():
-                      return CategoriesGridView(categories: state.data);
+                      return CategoriesGridView(
+                        categories: categoriesViewModel.categoriesList,
+                      );
 
                     default:
                       return const Text("Something went Wrong");
                   }
                 },
               ),
-            ),
-            SizedBox(
-              height: 10.h,
             ),
             const HomeTitle(title: "Most Selling"),
             SizedBox(
@@ -97,13 +108,13 @@ class _HomeTabState extends State<HomeTab> {
                 builder: (_, state) {
                   switch (state) {
                     case BaseLoadingState():
-                      return const LoadingWidget();
+                      return const ProductShimmerLoading();
 
                     case BaseErrorState():
                       return Text(state.errorMessage);
 
                     case BaseSuccessState():
-                      return ProductsList(products: state.data);
+                      return ProductsList(products: productsViewModel.productsList);
 
                     default:
                       return const Text("Something went Wrong");

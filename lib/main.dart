@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/presentation/view_model/cart_view_model.dart';
+import 'package:ecommerce_app/presentation/view_model/wishlist_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,16 +9,18 @@ import 'domain/di/di.dart';
 import 'presentation/screens/auth_screens/login_screen/login_screen.dart';
 import 'presentation/screens/auth_screens/register_screen/register_screen.dart';
 import 'presentation/screens/main_screen/main_screen.dart';
-import 'presentation/tabs/home_tab/home_tab_components/products/product_details.dart';
+import 'presentation/screens/main_screen/main_screen_components/cart/cart_screen.dart';
 import 'utils/app_themes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await ScreenUtil.ensureScreenSize();
   await CacheData.cacheInitialization();
   configureDependencies();
-  runApp(BlocProvider(
-      create: (_) => getIt<CartViewModel>(),
-      child: const ECommerceApp()));
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider(create: (_) => getIt<CartViewModel>()),
+    BlocProvider(create: (_) => getIt<WishlistViewModel>()),
+  ], child: const ECommerceApp()));
 }
 
 class ECommerceApp extends StatelessWidget {
@@ -34,7 +37,7 @@ class ECommerceApp extends StatelessWidget {
           RegisterScreen.routeName: (_) => const RegisterScreen(),
           LoginScreen.routeName: (_) => const LoginScreen(),
           MainScreen.routeName: (_) => const MainScreen(),
-          ProductDetails.routeName: (_) => const ProductDetails(),
+          CartScreen.routeName: (_) => const CartScreen(),
         },
         initialRoute: CacheData.getData(key: "token") == null
             ? LoginScreen.routeName

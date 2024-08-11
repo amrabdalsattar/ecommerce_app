@@ -10,10 +10,8 @@ class RouteLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Container(
-            margin: EdgeInsets.only(
-                top: MediaQuery
-                    .sizeOf(context)
-                    .width * 0.1),
+            margin:
+                EdgeInsets.only(top: MediaQuery.sizeOf(context).width * 0.1),
             child: Image.asset(
               AppAssets.routeLogo,
               width: 250.w,

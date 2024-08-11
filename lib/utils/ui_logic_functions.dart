@@ -7,3 +7,12 @@ String numbersFormat(num number) {
     return number.toString();
   }
 }
+
+String getFirstName(String name) {
+  List<String> nameParts = name.split(' ');
+  if (nameParts.isNotEmpty) {
+    return nameParts[0];
+  } else {
+    return '';
+  }
+}

@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:ecommerce_app/data/data_utils/cache_helper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
@@ -15,15 +14,15 @@ import '../models/responses/auth_response.dart';
 @Injectable(as: AuthRepo)
 class AuthRepoImpl extends AuthRepo {
   final ApiFactory api;
-
-  AuthRepoImpl(this.api);
+  final InternetConnectionChecker connectionChecker;
+  AuthRepoImpl(this.api, this.connectionChecker);
 
   @override
   Future<Either<Failure, bool>> login(
       {required String email, required String password}) async {
     try{
       final bool isConnectedToInternet =
-      await InternetConnectionChecker().hasConnection;
+      await connectionChecker.hasConnection;
       if (isConnectedToInternet) {
         final serverResponse = await api.post(ApiConstants.loginEndPoint,
             data: {"email": email, "password": password});
@@ -53,25 +52,21 @@ class AuthRepoImpl extends AuthRepo {
       {required RegisterRequest data}) async {
     try{
       final bool isConnectedToInternet =
-      await InternetConnectionChecker().hasConnection;
+      await connectionChecker.hasConnection;
       if (isConnectedToInternet) {
-        try {
-          Response serverResponse =
+
+          final serverResponse =
           await api.post(ApiConstants.registerEndPoint, data: data.toJson());
           AuthResponse registerResponse =
-          AuthResponse.fromJson(serverResponse.data);
-          if (serverResponse.statusCode! >= 200 &&
-              serverResponse.statusCode! < 300) {
+          AuthResponse.fromJson(serverResponse);
+          if (registerResponse.token != null) {
             CacheData.setData(key: "name", value: registerResponse.user?.name);
             CacheData.setData(key: "email", value: registerResponse.user?.email);
             CacheData.setData(key: "token", value: registerResponse.token);
             return const Right(true);
           } else {
-            return Left(Failure("Something went wrong, please try again later"));
+            return Left(Failure(registerResponse.message??"Something went wrong"));
           }
-        } catch (e) {
-          return left(Failure(e.toString()));
-        }
       } else {
         return left(NetworkFailure("Check your Internet Connection !"));
       }
